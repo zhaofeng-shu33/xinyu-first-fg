@@ -1,7 +1,7 @@
 /**
  * 请求真正的后端
  */
-import {LOGIN_ENDPOINT} from './config.js';
+import {LOGIN_URL} from './config.js';
 
 export async function getUserProfile() {
     const data = await {
@@ -13,11 +13,12 @@ export async function getUserProfile() {
     return { data };
   }
   
-  export async function login(params) {
+export async function login(params) {
     const { password, username } = params;
-    let data = JSON.stringify({username, password});
+    let data_send = JSON.stringify({username, password});
+    let data = {};
     let loginConfig =  {
-        body: submitStr,
+        body: data_send,
         headers: {
             "Content-Type": "application/json",                  
         },
@@ -27,44 +28,44 @@ export async function getUserProfile() {
     const response = await fetch(LOGIN_URL, loginConfig);
     const json = await response.json();
     if(json.password || json.non_field_errors){
-        data = {
-            status: 200,
+        data = await {
+            status: 400,
             statusText: '用户名或密码错误',
             currentAuthority: 'guest'
         }
     }  
     else if(json.key){
-        data = {
+        data = await {
             status: 200,
             statusText: 'ok',
             currentAuthority: 'user'
         }
     }
     else{
-        data = {
-            status: 200,
+        data = await {
+            status: 400,
             statusText: '未知错误',
             currentAuthority: 'guest'
         }
     }
     return { data };
-  }
+}
   
-  export async function postUserRegister() {
+export async function postUserRegister() {
     const data = await {
-      status: 200,
-      statusText: 'ok',
-      currentAuthority: 'user',
+        status: 200,
+        statusText: 'ok',
+        currentAuthority: 'user',
     };
     return { data };
-  }
-  
-  export async function postUserLogout() {
+}
+
+export async function postUserLogout() {
     const data = await {
-      status: 200,
-      statusText: 'ok',
-      currentAuthority: 'guest',
+        status: 200,
+        statusText: 'ok',
+        currentAuthority: 'guest',
     };
     return { data };
-  }
+}
   

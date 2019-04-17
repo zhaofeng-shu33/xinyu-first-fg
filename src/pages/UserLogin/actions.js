@@ -17,7 +17,7 @@
 
 import { push } from 'react-router-redux';
 import { Message } from '@alifd/next';
-import { login } from '../../api/user_backend.js';
+import { login } from '../../api/user_backend';
 import { setAuthority } from '../../utils/authority';
 import { reloadAuthorized } from '../../utils/Authorized';
 import {
