@@ -29,7 +29,7 @@ export async function login(params) {
     const json = await response.json();
     if(json.password || json.non_field_errors){
         data = await {
-            status: 400,
+            status: 401,
             statusText: '用户名或密码错误',
             currentAuthority: 'guest'
         }
@@ -43,7 +43,7 @@ export async function login(params) {
     }
     else{
         data = await {
-            status: 400,
+            status: 401,
             statusText: '未知错误',
             currentAuthority: 'guest'
         }
