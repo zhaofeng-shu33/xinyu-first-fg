@@ -20,7 +20,7 @@ const userProfileRequest = () => {
 
 const userProfileSuccess = (payload) => {
   return {
-    type: USER_PROFILE_FAILURE,
+    type: USER_PROFILE_SUCCESS,
     isLoading: false,
     payload,
   };
@@ -28,7 +28,7 @@ const userProfileSuccess = (payload) => {
 
 const userProfileFailure = (payload) => {
   return {
-    type: USER_PROFILE_SUCCESS,
+    type: USER_PROFILE_FAILURE,
     isLoading: false,
     payload,
   };
