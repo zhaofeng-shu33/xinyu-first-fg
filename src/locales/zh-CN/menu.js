@@ -35,7 +35,7 @@ export default {
   // Top Header
   'app.header.feedback': '反馈',
   'app.header.help': '帮助',
-  'app.header.user.name': '新雨管理员',
+  'app.header.user.name': '游客',
   'app.header.user.department': '技术部',
   'app.header.user.setting': '设置',
   'app.header.user.logout': '退出',

@@ -35,6 +35,7 @@ const asideMenuConfig = [
     name: 'chart',
     path: '/chart',
     icon: 'chart1',
+    authority: 'admin',
     children: [
       {
         name: 'basic',
@@ -50,6 +51,7 @@ const asideMenuConfig = [
     name: '表格页',
     path: '/table',
     icon: 'table',
+    authority: 'admin',
     children: [
       {
         name: 'basic',
@@ -67,6 +69,7 @@ const asideMenuConfig = [
     name: '列表页',
     path: '/list',
     icon: 'copy',
+    authority: 'admin',
     children: [
       {
         name: 'basic',
@@ -82,6 +85,7 @@ const asideMenuConfig = [
     name: 'profile',
     path: '/profile',
     icon: 'cascades',
+    authority: 'admin',
     children: [
       {
         name: 'basic',
@@ -97,6 +101,7 @@ const asideMenuConfig = [
     name: 'result',
     path: '/result',
     icon: 'edit2',
+    authority: 'admin',
     children: [
       {
         name: 'success',
