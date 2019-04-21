@@ -76,10 +76,11 @@ class SettingsForm extends Component {
     }
   };
   static getDerivedStateFromProps(props, state) {
-    let name = props.profile.name;
-    if (name && !state.isInitialized) {
-      let email = props.profile.email;
-      let law_firm = props.profile.department;
+    let user = props.profile.user;
+    if (user && !state.isInitialized) {
+      let name = user.username;
+      let email = user.email;
+      let law_firm = props.profile.law_firm;
       return { value: { name, email, law_firm }, isInitialized: true }
     }
     else

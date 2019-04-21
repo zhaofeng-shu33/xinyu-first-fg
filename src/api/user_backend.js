@@ -4,10 +4,7 @@
 import { LOGIN_URL, PROFILE_URL, LOGOUT_URL } from './config.js';
 import { getKey, setKey, removeKey } from './key.js';
 export async function getUserProfile() {
-  let username = '游客';
-  let department = '';
-  let userid = -1;
-  let email = 'example@org';
+  let data = {};
   let key = getKey();
   if (key) {
     const response = await fetch(PROFILE_URL,
@@ -17,23 +14,30 @@ export async function getUserProfile() {
         }
       });
     const json = await response.json();
-    if (json.user) {
-        username = json.user.username;
-        department = json.law_firm;
-        email = json.user.email;
-        userid = json.user.pk;
-      }
+    return {data: json}
   }
-  const data = await {
-    name: username,
-    department: department,
-    email: email,
-    avatar: 'https://img.alicdn.com/tfs/TB1L6tBXQyWBuNjy0FpXXassXXa-80-80.png',
-    userid: userid,
-  };
-    return { data };
+  // avatar: 'https://img.alicdn.com/tfs/TB1L6tBXQyWBuNjy0FpXXassXXa-80-80.png'
+  return { data };
   }
-  
+export async function updateUserProfile(params) {
+  let key = getKey();
+  let data = {};
+  if (key) {
+    let data_send = JSON.stringify(params);
+    const response = await fetch(PROFILE_URL,
+      {
+        body: data_send,
+        method: 'PUT',
+        headers: {
+          Authorization: 'Token ' + key,
+          "Content-Type": "application/json",
+        }
+      });
+    const json = await response.json();
+    return {data: json}
+  }
+  return { data };
+} 
 export async function login(params) {
     const { password, username } = params;
     let data_send = JSON.stringify({username, password});

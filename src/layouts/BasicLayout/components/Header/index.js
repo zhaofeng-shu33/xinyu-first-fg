@@ -32,8 +32,8 @@ export default class Header extends Component {
       intl: { formatMessage },      
     } = this.props;
     console.log(this.props);
-    const username = this.props.profile.name;
-    const department = this.props.profile.department;
+    const username = this.props.profile.user ? this.props.profile.user.username: null;
+    const department = this.props.profile.law_firm;
     return (
       <Layout.Header
         theme="dark"

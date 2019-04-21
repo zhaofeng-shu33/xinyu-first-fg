@@ -9,7 +9,7 @@ import {
   USER_PROFILE_FAILURE,
   USER_PROFILE_SUCCESS,
 } from './constants';
-import { getUserProfile } from '../../api/user_backend';
+import { getUserProfile, updateUserProfile } from '../../api/user_backend';
 
 const userProfileRequest = () => {
   return {
@@ -34,12 +34,17 @@ const userProfileFailure = (payload) => {
   };
 };
 
-export const userProfile = (params) => {
+export const userProfile = (params = null) => {
   return async (dispatch) => {
     dispatch(userProfileRequest());
     try {
-      const response = await getUserProfile(params);
-
+      let response = {};
+      if (params) {
+        response = await updateUserProfile(params);
+      }
+      else {
+        response = await getUserProfile();
+      }
       dispatch(userProfileSuccess(response.data));
     } catch (error) {
       dispatch(userProfileFailure(error));
