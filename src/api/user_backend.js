@@ -76,7 +76,12 @@ export async function postUserRegister() {
 }
 
 export async function postUserLogout() {
-  const response = await fetch(LOGOUT_URL, { method: 'POST' });
+  const response = await fetch(LOGOUT_URL, {
+    method: 'POST',
+    headers: {
+      Authorization: 'Token ' + key
+    }
+  });
   if (response.status == 200) {
     removeKey();
   }
