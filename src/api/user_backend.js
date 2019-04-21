@@ -88,7 +88,8 @@ export async function postUserRegister() {
 
 export async function postUserLogout() {
   let data = {}
-  if (getKey()) {
+  let key = getKey()
+  if (key) {
     const response = await fetch(LOGOUT_URL, {
       method: 'POST',
       headers: {
