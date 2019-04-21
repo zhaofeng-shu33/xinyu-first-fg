@@ -14,8 +14,8 @@ export async function getUserProfile() {
         }
       });
     const json = await response.json();
-    if (json.username) {
-      username = json.username;
+    if (json.user) {
+      username = json.user.username;
       }
   }
   const data = await {
@@ -76,19 +76,29 @@ export async function postUserRegister() {
 }
 
 export async function postUserLogout() {
-  const response = await fetch(LOGOUT_URL, {
-    method: 'POST',
-    headers: {
-      Authorization: 'Token ' + key
+  let data = {}
+  if (getKey()) {
+    const response = await fetch(LOGOUT_URL, {
+      method: 'POST',
+      headers: {
+        Authorization: 'Token ' + key
+      }
+    });
+    if (response.status == 200) {
+      removeKey();
     }
-  });
-  if (response.status == 200) {
-    removeKey();
-  }
-  const data = await {
+     data = await {
       status: response.status,
       statusText: response.statusText,
       currentAuthority: 'guest',
-  };
+    };
+  }
+  else {
+     data = await {
+      status: 200,
+      statusText: 'ok',
+      currentAuthority: 'guest',
+    };
+  }
     return { data };
 }
