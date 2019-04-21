@@ -29,10 +29,10 @@ export default class Header extends Component {
       isMobile,
       className,
       style,
-      intl: { formatMessage },
+      intl: { formatMessage },      
     } = this.props;
     console.log(this.props);
-
+    const username = this.props.profile.name;
     return (
       <Layout.Header
         theme="dark"
@@ -95,7 +95,7 @@ export default class Header extends Component {
                 />
                 <div className="user-profile">
                   <span className="user-name">
-                    <FormattedMessage id="app.header.user.name" />
+                    {username ? username : (<FormattedMessage id="app.header.user.name" />) }
                   </span>
                   <br />
                   <span className="user-department">

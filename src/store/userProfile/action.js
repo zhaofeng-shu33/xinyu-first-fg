@@ -9,7 +9,7 @@ import {
   USER_PROFILE_FAILURE,
   USER_PROFILE_SUCCESS,
 } from './constants';
-import { getUserProfile } from '../../api/user';
+import { getUserProfile } from '../../api/user_backend';
 
 const userProfileRequest = () => {
   return {

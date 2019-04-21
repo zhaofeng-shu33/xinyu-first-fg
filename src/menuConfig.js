@@ -117,6 +117,7 @@ const asideMenuConfig = [
     name: 'account',
     path: '/account',
     icon: 'person',
+    authority: 'user',
     children: [
       {
         name: 'setting',

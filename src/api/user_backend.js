@@ -1,15 +1,29 @@
 /**
  * 请求真正的后端
  */
-import {LOGIN_URL} from './config.js';
-
+import { LOGIN_URL, PROFILE_URL } from './config.js';
+import { getKey, setKey } from './key.js';
 export async function getUserProfile() {
-    const data = await {
-      name: '淘小宝',
-      department: '技术部',
-      avatar: 'https://img.alicdn.com/tfs/TB1L6tBXQyWBuNjy0FpXXassXXa-80-80.png',
-      userid: 10001,
-    };
+  let username = '游客';
+  let key = getKey();
+  if (key) {
+    const response = await fetch(PROFILE_URL,
+      {
+        headers: {
+          Authorization: 'Token ' + key
+        }
+      });
+    const json = await response.json();
+    if (json.username) {
+      username = json.username;
+      }
+  }
+  const data = await {
+    name: username,
+    department: '技术部',
+    avatar: 'https://img.alicdn.com/tfs/TB1L6tBXQyWBuNjy0FpXXassXXa-80-80.png',
+    userid: 10001,
+  };
     return { data };
   }
   
@@ -34,7 +48,8 @@ export async function login(params) {
             currentAuthority: 'guest'
         }
     }  
-    else if(json.key){
+    else if (json.key) {
+        setKey(json.key);
         data = await {
             status: 200,
             statusText: 'ok',
@@ -68,4 +83,3 @@ export async function postUserLogout() {
     };
     return { data };
 }
-  

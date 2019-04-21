@@ -27,6 +27,7 @@ function userProfileReducer(state = initialState, action) {
     case USER_PROFILE_SUCCESS:
       return Object.assign({}, state, {
         isLoading: action.isLoading,
+        ...action.payload,
       });
     default:
       return state;
