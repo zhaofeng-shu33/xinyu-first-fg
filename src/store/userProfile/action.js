@@ -10,6 +10,7 @@ import {
   USER_PROFILE_SUCCESS,
 } from './constants';
 import { getUserProfile, updateUserProfile } from '../../api/user_backend';
+import { Message } from '@alifd/next';
 
 const userProfileRequest = () => {
   return {
@@ -41,6 +42,7 @@ export const userProfile = (params = null) => {
       let response = {};
       if (params) {
         response = await updateUserProfile(params);
+        Message.success('更新成功');
       }
       else {
         response = await getUserProfile();

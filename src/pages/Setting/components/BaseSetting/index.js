@@ -5,6 +5,7 @@ import IceContainer from '@icedesign/container';
 import { Input, Radio, Switch, Upload, Grid, Form } from '@alifd/next';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import { userProfile } from '../../../../store/userProfile/action';
 const { Row, Col } = Grid;
 const { Group: RadioGroup } = Radio;
 const FormItem = Form.Item;
@@ -41,7 +42,7 @@ class SettingsForm extends Component {
     super(props);
     this.state = {
       value: {
-        name: '',
+        username: '',          
         gender: 'male',
         notice: false,
         email: '',
@@ -71,6 +72,13 @@ class SettingsForm extends Component {
     console.log('error', errors, 'value', values);
     if (!errors) {
       // 提交当前填写的数据
+      this.props.userProfile({
+        law_firm: values.law_firm,
+        user: {
+          username: values.username,
+          email: values.email,
+        }
+      });
     } else {
       // 处理表单报错
     }
@@ -78,10 +86,10 @@ class SettingsForm extends Component {
   static getDerivedStateFromProps(props, state) {
     let user = props.profile.user;
     if (user && !state.isInitialized) {
-      let name = user.username;
+      let username = user.username;
       let email = user.email;
       let law_firm = props.profile.law_firm;
-      return { value: { name, email, law_firm }, isInitialized: true }
+      return { value: { username, email, law_firm }, isInitialized: true }
     }
     else
       return null;
@@ -109,7 +117,7 @@ class SettingsForm extends Component {
                   id: 'app.setting.name.message',
                 })}
               >
-                <Input name="name" placeholder="taoxiaobao" />
+                <Input name="username" placeholder="taoxiaobao"/>
               </FormItem>
               <FormItem
                 label={formatMessage({ id: 'app.setting.avatar' })}
@@ -221,12 +229,16 @@ const styles = {
     borderBottom: '1px solid #eee',
   },
 };
+const mapDispatchToProps = {
+  userProfile,
+};
 const mapStateToProps = (state) => {
   return { profile: state.profile };
 };
 
 const withConnect = connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 );
 
 export default compose(
