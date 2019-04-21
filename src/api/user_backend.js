@@ -5,6 +5,9 @@ import { LOGIN_URL, PROFILE_URL, LOGOUT_URL } from './config.js';
 import { getKey, setKey, removeKey } from './key.js';
 export async function getUserProfile() {
   let username = '游客';
+  let department = '';
+  let userid = -1;
+  let email = 'example@org';
   let key = getKey();
   if (key) {
     const response = await fetch(PROFILE_URL,
@@ -15,14 +18,18 @@ export async function getUserProfile() {
       });
     const json = await response.json();
     if (json.user) {
-      username = json.user.username;
+        username = json.user.username;
+        department = json.law_firm;
+        email = json.user.email;
+        userid = json.user.pk;
       }
   }
   const data = await {
     name: username,
-    department: '技术部',
+    department: department,
+    email: email,
     avatar: 'https://img.alicdn.com/tfs/TB1L6tBXQyWBuNjy0FpXXassXXa-80-80.png',
-    userid: 10001,
+    userid: userid,
   };
     return { data };
   }

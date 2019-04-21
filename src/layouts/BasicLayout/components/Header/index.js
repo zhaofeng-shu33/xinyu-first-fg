@@ -33,6 +33,7 @@ export default class Header extends Component {
     } = this.props;
     console.log(this.props);
     const username = this.props.profile.name;
+    const department = this.props.profile.department;
     return (
       <Layout.Header
         theme="dark"
@@ -99,7 +100,7 @@ export default class Header extends Component {
                   </span>
                   <br />
                   <span className="user-department">
-                    <FormattedMessage id="app.header.user.department" />
+                    {department ? department : (<FormattedMessage id="app.header.user.department" />)}
                   </span>
                 </div>
                 <FoundationSymbol

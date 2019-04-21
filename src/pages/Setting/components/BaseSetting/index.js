@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import IceContainer from '@icedesign/container';
 import { Input, Radio, Switch, Upload, Grid, Form } from '@alifd/next';
-
+import { connect } from 'react-redux';
+import { compose } from 'redux';
 const { Row, Col } = Grid;
 const { Group: RadioGroup } = Radio;
 const FormItem = Form.Item;
@@ -45,14 +46,12 @@ class SettingsForm extends Component {
         notice: false,
         email: '',
         avatar: [],
-        siteUrl: '',
-        githubUrl: '',
-        twitterUrl: '',
+        law_firm: '',
         description: '',
       },
+      isInitialized: false
     };
   }
-
   onDragOver = () => {
     console.log('dragover callback');
   };
@@ -76,8 +75,18 @@ class SettingsForm extends Component {
       // 处理表单报错
     }
   };
-
+  static getDerivedStateFromProps(props, state) {
+    let name = props.profile.name;
+    if (name && !state.isInitialized) {
+      let email = props.profile.email;
+      let law_firm = props.profile.department;
+      return { value: { name, email, law_firm }, isInitialized: true }
+    }
+    else
+      return null;
+  }
   render() {
+
     const {
       intl: { formatMessage },
     } = this.props;
@@ -94,7 +103,7 @@ class SettingsForm extends Component {
                 label={formatMessage({ id: 'app.setting.name' })}
                 {...formItemLayout}
                 required
-                maxLength={10}
+                maxLength={12}
                 requiredMessage={formatMessage({
                   id: 'app.setting.name.message',
                 })}
@@ -103,8 +112,7 @@ class SettingsForm extends Component {
               </FormItem>
               <FormItem
                 label={formatMessage({ id: 'app.setting.avatar' })}
-                {...formItemLayout}
-                required
+                {...formItemLayout}                
                 requiredMessage={formatMessage({
                   id: 'app.setting.avatar.message',
                 })}
@@ -123,7 +131,6 @@ class SettingsForm extends Component {
               <FormItem
                 label={formatMessage({ id: 'app.setting.gender' })}
                 {...formItemLayout}
-                required
                 requiredMessage={formatMessage({
                   id: 'app.setting.gender.message',
                 })}
@@ -155,48 +162,19 @@ class SettingsForm extends Component {
                 <Input htmlType="email" name="email" />
               </FormItem>
               <FormItem
-                label={formatMessage({ id: 'app.setting.website' })}
+                label={formatMessage({ id: 'app.setting.law_firm' })}
                 {...formItemLayout}
                 required
                 requiredMessage={formatMessage({
-                  id: 'app.setting.website.message',
+                  id: 'app.setting.law_firm',
                 })}
-                format="url"
               >
                 <Input
-                  name="siteUrl"
-                  type="url"
-                  placeholder="https://alibaba.github.io/ice"
+                  name="law_firm"
                 />
               </FormItem>
 
-              <FormItem
-                label={formatMessage({ id: 'app.setting.github' })}
-                {...formItemLayout}
-                required
-                requiredMessage={formatMessage({
-                  id: 'app.setting.github.message',
-                })}
-                format="url"
-              >
-                <Input
-                  type="url"
-                  name="githubUrl"
-                  placeholder="https://github.com/alibaba/ice"
-                />
-              </FormItem>
 
-              <FormItem
-                label={formatMessage({ id: 'app.setting.twitter' })}
-                {...formItemLayout}
-                required
-                requiredMessage={formatMessage({
-                  id: 'app.setting.twitter.message',
-                })}
-                format="url"
-              >
-                <Input name="twitterUrl" placeholder="https://twitter.com" />
-              </FormItem>
 
               <FormItem
                 label={formatMessage({ id: 'app.setting.description' })}
@@ -242,5 +220,16 @@ const styles = {
     borderBottom: '1px solid #eee',
   },
 };
+const mapStateToProps = (state) => {
+  return { profile: state.profile };
+};
 
-export default injectIntl(SettingsForm);
+const withConnect = connect(
+  mapStateToProps
+);
+
+export default compose(
+  injectIntl,
+  withConnect
+)(SettingsForm);
+

@@ -19,4 +19,5 @@ export default {
   'app.setting.twitter.message': '请输入正确的 Twitter 账号',
   'app.setting.description': '自我描述',
   'app.setting.submit': '提交',
+  'app.setting.law_firm': '律所'
 };
