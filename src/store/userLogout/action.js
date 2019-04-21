@@ -6,7 +6,7 @@
 
 import { push } from 'react-router-redux';
 import { Message } from '@alifd/next';
-import { postUserLogout } from '../../api/user';
+import { postUserLogout } from '../../api/user_backend';
 import { setAuthority } from '../../utils/authority';
 import { reloadAuthorized } from '../../utils/Authorized';
 import {

@@ -1,8 +1,8 @@
 /**
  * 请求真正的后端
  */
-import { LOGIN_URL, PROFILE_URL } from './config.js';
-import { getKey, setKey } from './key.js';
+import { LOGIN_URL, PROFILE_URL, LOGOUT_URL } from './config.js';
+import { getKey, setKey, removeKey } from './key.js';
 export async function getUserProfile() {
   let username = '游客';
   let key = getKey();
@@ -76,10 +76,14 @@ export async function postUserRegister() {
 }
 
 export async function postUserLogout() {
-    const data = await {
-        status: 200,
-        statusText: 'ok',
-        currentAuthority: 'guest',
-    };
+  const response = await fetch(LOGOUT_URL, { method: 'POST' });
+  if (response.status == 200) {
+    removeKey();
+  }
+  const data = await {
+      status: response.status,
+      statusText: response.statusText,
+      currentAuthority: 'guest',
+  };
     return { data };
 }

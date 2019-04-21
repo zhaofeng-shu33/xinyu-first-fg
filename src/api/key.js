@@ -4,5 +4,8 @@ export function getKey() {
 }
 
 export function setKey(new_key) {
-  return localStorage.setItem('django-rest-auth-key', new_key);
+  localStorage.setItem('django-rest-auth-key', new_key);
+}
+export function removeKey() {
+  localStorage.removeItem('django-rest-auth-key');
 }
