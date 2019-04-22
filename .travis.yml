@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+  - "8"
+cache: npm
+install:
+  - npm install
+  - wget http://gosspublic.alicdn.com/ossutil/1.5.2/ossutil64
+  - chmod 755 ossutil64
+script:
+  - npm run build
+  - ossutil64 -i LTAIhGvOLG5VLaqh -k $APP_SECRET -e http://oss-cn-shenzhen.aliyuncs.com cp -r build/ oss://programmierung/xinyu/

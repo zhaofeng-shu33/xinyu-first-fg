@@ -1,25 +1,6 @@
-<p align="center">
-  <a href="https://alibaba.github.io/ice">
-    <img alt="ICE" src="https://gw.alicdn.com/tfs/TB1FEW2nfDH8KJjy1XcXXcpdXXa-487-132.svg" width="200">
-  </a>
-</p>
-<p align="center">赋能企业中后台建设</p>
-<p align="center">
-  <a href="https://github.com/alibaba/ice/blob/master/LICENSE"><img src="https://img.shields.io/badge/lisense-MIT-brightgreen.svg"></a>
-</p>
 
-## 简介
-
-基于海量高质量可复用区块，通过 GUI 工具快速搭建的一套中后台模板。
-
-![ice-design-pro](https://img.alicdn.com/tfs/TB1_bulmpOWBuNjy0FiXXXFxVXa-1920-1080.png)
-
-## 特性
-
-- 专业的设计支持: [ICE Design](https://alibaba.github.io/ice/design.html)
-- 成熟的基础组件: [ICE Component](https://alibaba.github.io/ice/component/button)
-- 丰富的业务模块: [ICE Block](https://alibaba.github.io/ice/block)
-- 完善的开发工具: [iceworks](https://alibaba.github.io/ice/iceworks)
+## 测试网址
+[主页](https://programmierung.oss-cn-shenzhen.aliyuncs.com/xinyu/index.html)
 
 ## 技术点
 
