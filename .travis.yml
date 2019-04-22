@@ -8,4 +8,4 @@ install:
   - chmod 755 ossutil64
 script:
   - npm run build
-  - ossutil64 -i LTAIhGvOLG5VLaqh -k $APP_SECRET -e http://oss-cn-shenzhen.aliyuncs.com cp -r build/ oss://programmierung/xinyu/
+  - ./ossutil64 -i LTAIhGvOLG5VLaqh -k $APP_SECRET -e http://oss-cn-shenzhen.aliyuncs.com cp -r build/ oss://programmierung/xinyu/
