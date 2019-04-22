@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import IceContainer from '@icedesign/container';
-import { Input, Radio, Switch, Upload, Grid, Form } from '@alifd/next';
+import { Input, Radio, Switch, Upload, Grid, Form, Select } from '@alifd/next';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { userProfile } from '../../../../store/userProfile/action';
@@ -177,11 +177,13 @@ class SettingsForm extends Component {
                   id: 'app.setting.law_firm',
                 })}
               >
-                <Input
-                  name="law_firm"
-                />
-              </FormItem>
+                <Select name="law_firm">
+                  <Select.Option value="广东广和律师事务所">广东广和律师事务所</Select.Option>
+                  <Select.Option value="维德普法">维德普法</Select.Option>
+                  <Select.Option value="广东中矩律师事务所">广东中矩律师事务所</Select.Option>
+                </Select>
 
+              </FormItem>
 
 
               <FormItem
