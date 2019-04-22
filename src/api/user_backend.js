@@ -1,7 +1,7 @@
 /**
  * 请求真正的后端
  */
-import { LOGIN_URL, PROFILE_URL, LOGOUT_URL } from './config.js';
+import { LOGIN_URL, PROFILE_URL, LOGOUT_URL, REGISTRATION_URL } from './config.js';
 import { getKey, setKey, removeKey } from './key.js';
 export async function getUserProfile() {
   let data = {};
@@ -24,33 +24,31 @@ export async function updateUserProfile(params) {
   let data = {};
   if (key) {
     let data_send = JSON.stringify(params);
-    const response = await fetch(PROFILE_URL,
-      {
-        body: data_send,
-        method: 'PUT',
-        headers: {
-          Authorization: 'Token ' + key,
-          "Content-Type": "application/json",
-        }
-      });
+    let config = {
+      body: data_send,
+      method: 'PUT',
+      headers: {
+        Authorization: 'Token ' + key,
+        "Content-Type": "application/json",
+      }
+    };
+    const response = await fetch(PROFILE_URL, config);
     const json = await response.json();
     return {data: json}
   }
   return { data };
 } 
 export async function login(params) {
-    const { password, username } = params;
-    let data_send = JSON.stringify({username, password});
+    let data_send = JSON.stringify(params);
     let data = {};
-    let loginConfig =  {
+    let config =  {
         body: data_send,
         headers: {
             "Content-Type": "application/json",                  
         },
-        method: 'POST',
-        credentials: 'include'
+        method: 'POST'
     };
-    const response = await fetch(LOGIN_URL, loginConfig);
+    const response = await fetch(LOGIN_URL, config);
     const json = await response.json();
     if(json.password || json.non_field_errors){
         data = await {
@@ -77,12 +75,23 @@ export async function login(params) {
     return { data };
 }
   
-export async function postUserRegister() {
-    const data = await {
-        status: 200,
-        statusText: 'ok',
+export async function postUserRegister(params) {
+  let data_send = JSON.stringify(params);
+  let data = {};
+  let config = {
+    body: data_send,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: 'POST'
+  };
+  const response = await fetch(REGISTRATION_URL, config);
+  const json = await response.json();
+  data = {
+        status: response.status,
+        statusText: json.detail ? json.detail : 'ok',
         currentAuthority: 'user',
-    };
+  };
     return { data };
 }
 

@@ -66,7 +66,12 @@ class UserRegister extends Component {
       console.log('errors', errors);
       return;
     }
-    this.props.userRegister(values);
+    this.props.userRegister({
+      username: values.name,
+      email: values.email,
+      password1: values.passwd,
+      password2: values.rePasswd
+    });
   };
 
   render() {
@@ -140,7 +145,7 @@ class UserRegister extends Component {
                 }
                 name="rePasswd"
                 htmlType="password"
-                placeholder="至少8位密码"
+                placeholder="重复上述密码"
               />
             </FormItem>
             <Row className="formItem">

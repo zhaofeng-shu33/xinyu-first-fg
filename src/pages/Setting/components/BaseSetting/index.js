@@ -88,7 +88,7 @@ class SettingsForm extends Component {
     if (user && !state.isInitialized) {
       let username = user.username;
       let email = user.email;
-      let law_firm = props.profile.law_firm;
+      let law_firm = props.profile.law_firm ? props.profile.law_firm : '';
       return { value: { username, email, law_firm }, isInitialized: true }
     }
     else

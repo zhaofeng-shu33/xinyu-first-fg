@@ -22,7 +22,7 @@ import {
   USER_REGISTER_SUCCESS,
   USER_REGISTER_FAILURE,
 } from './constants';
-import { postUserRegister } from '../../api/user';
+import { postUserRegister } from '../../api/user_backend';
 
 /**
  * Changes the input field of the form
@@ -60,7 +60,7 @@ export const userRegister = (params) => {
     try {
       const response = await postUserRegister(params);
 
-      if (response.data.status === 200) {
+      if (response.data.status === 200 || response.data.status == 201) {
         Message.success('注册成功');
 
         dispatch(userRegisterSuccess(response.data));
