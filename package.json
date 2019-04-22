@@ -63,7 +63,8 @@
   "scripts": {
     "start": "ice dev",
     "build": "ice build",
-    "lint": "eslint . --ext '.js,.jsx' --fix"
+    "lint": "eslint . --ext '.js,.jsx' --fix",
+    "ice": "ice"
   },
   "publishConfig": {
     "access": "public"

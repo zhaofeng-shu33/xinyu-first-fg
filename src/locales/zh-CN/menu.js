@@ -25,6 +25,7 @@ export default {
 
   'app.menu.account': '个人页',
   'app.menu.account.setting': '个人设置',
+  'app.menu.account.user': '个人设置',
 
   'app.menu.exception': '异常页',
   'app.menu.exception.204': '204',

@@ -12,14 +12,14 @@ import {
 import { getUserProfile, updateUserProfile } from '../../api/user_backend';
 import { Message } from '@alifd/next';
 
-const userProfileRequest = () => {
+export const userProfileRequest = () => {
   return {
     type: USER_PROFILE_REQUEST,
     isLoading: true,
   };
 };
 
-const userProfileSuccess = (payload) => {
+export const userProfileSuccess = (payload) => {
   return {
     type: USER_PROFILE_SUCCESS,
     isLoading: false,
@@ -27,7 +27,7 @@ const userProfileSuccess = (payload) => {
   };
 };
 
-const userProfileFailure = (payload) => {
+export const userProfileFailure = (payload) => {
   return {
     type: USER_PROFILE_FAILURE,
     isLoading: false,

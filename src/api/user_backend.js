@@ -1,7 +1,11 @@
 /**
  * 请求真正的后端
  */
-import { LOGIN_URL, PROFILE_URL, LOGOUT_URL, REGISTRATION_URL } from './config.js';
+import {
+  LOGIN_URL, PROFILE_URL,
+  LOGOUT_URL, REGISTRATION_URL,
+  PASSWORD_CHANGE_URL
+} from './config.js';
 import { getKey, setKey, removeKey } from './key.js';
 export async function getUserProfile() {
   let data = {};
@@ -123,3 +127,25 @@ export async function postUserLogout() {
   }
     return { data };
 }
+
+export async function passwordChange(params) {
+  let key = getKey();
+  if (key) {
+    let data_send = JSON.stringify(params);
+    let config = {
+      body: data_send,
+      method: 'POST',
+      headers: {
+        Authorization: 'Token ' + key,
+        "Content-Type": "application/json",
+      }
+    };
+    const response = await fetch(PASSWORD_CHANGE_URL, config);
+    const json = await response.json();
+    return {
+      status: response.status,
+      data: json
+    }
+  }
+  return data;
+} 

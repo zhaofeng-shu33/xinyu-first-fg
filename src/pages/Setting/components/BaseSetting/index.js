@@ -62,7 +62,6 @@ class SettingsForm extends Component {
   };
 
   formChange = (value) => {
-    console.log('value', value);
     this.setState({
       value,
     });

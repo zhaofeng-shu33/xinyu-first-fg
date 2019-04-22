@@ -16,6 +16,7 @@ import GeneralTable from './pages/GeneralTable';
 import Profile from './pages/Profile';
 import Setting from './pages/Setting';
 import Fail from './pages/Fail';
+import UserProfile from './pages/UserProfile';
 import { Empty, Forbidden, NotFound, ServerError } from './pages/Exception';
 import { getRouterData } from './utils/utils';
 import { asideMenuConfig } from './menuConfig';
@@ -68,6 +69,10 @@ const routerConfig = [
   {
     path: '/account/setting',
     component: Setting,
+  },
+  {
+    path: '/account/user',
+    component: UserProfile,
   },
   {
     path: '/exception/500',

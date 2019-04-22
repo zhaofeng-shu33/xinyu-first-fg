@@ -120,8 +120,8 @@ const asideMenuConfig = [
     authority: 'user',
     children: [
       {
-        name: 'setting',
-        path: '/account/setting',
+        name: 'user',
+        path: '/account/user',
       },
     ],
   }
