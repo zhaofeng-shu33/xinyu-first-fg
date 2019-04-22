@@ -126,7 +126,7 @@ export default class Header extends Component {
                 onClick={this.props.handleLogout}
               >
                 <FoundationSymbol type="person" size="small" />
-                <FormattedMessage id="app.header.user.logout" />
+                {username ?  (<FormattedMessage id="app.header.user.logout" />) : '登录' }
               </li>
             </ul>
           </Balloon>

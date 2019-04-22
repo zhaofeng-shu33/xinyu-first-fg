@@ -14,7 +14,7 @@ import {
   USER_LOGOUT_FAILURE,
   USER_LOGOUT_SUCCESS,
 } from './constants';
-
+import { getAuthority } from '../../utils/authority';
 const userLogoutRequest = () => {
   return {
     type: USER_LOGOUT_REQUEST,
@@ -40,6 +40,10 @@ const userLogoutFailure = (payload) => {
 
 export const userLogout = () => {
   return async (dispatch) => {
+    if(getAuthority() == 'guest'){
+        dispatch(push('/user/login'));
+        return;
+    }
     dispatch(userLogoutRequest());
     try {
       const response = await postUserLogout();
