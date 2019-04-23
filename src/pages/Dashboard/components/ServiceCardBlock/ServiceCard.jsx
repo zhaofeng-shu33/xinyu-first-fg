@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Grid, Icon } from '@alifd/next';
+import { Grid, Icon, Message } from '@alifd/next';
 import IceContainer from '@icedesign/container';
-
+import { getClassList } from '../../../../api/class_apply';
 const { Row, Col } = Grid;
-
+import { injectIntl } from 'react-intl';
 // MOCK 数据，实际业务按需进行替换
 const getData = () => {
   return Array.from({ length: 6 }).map(() => {
@@ -15,6 +15,7 @@ const getData = () => {
   });
 };
 
+@injectIntl
 export default class ServiceCard extends Component {
   static displayName = 'ServiceCard';
 
@@ -24,30 +25,39 @@ export default class ServiceCard extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {data:[]};
   }
-
+  componentDidMount() {
+    getClassList().then(json => {
+      this.setState({ data: json });
+    }).catch(error => {
+      Message.error('数据加载失败');
+    })
+  }
   render() {
-    const mockData = getData();
     return (
       <Row wrap gutter="20">
-        {mockData.map((item, index) => {
+        {this.state.data.map((item, index) => {
+          let date = new Date(item.start_time);
+          let date_str = this.props.intl.formatDate(date);
+          let time_str = this.props.intl.formatTime(date);
           return (
             <Col l="8" key={index}>
               <IceContainer style={styles.container}>
                 <div style={styles.body}>
-                  <h5 style={styles.name}>{item.name}</h5>
-                  <p style={styles.desc}>{item.desc}</p>
-                  <div style={styles.tag}>{item.tag}</div>
+                  <h5 style={styles.name}>{item.school}</h5>
+                  <p style={styles.desc}>《{item.course.name}》</p>
+                  <p style={styles.desc}> <span>上课时间：</span>{date_str + ' ' + time_str} </p>
+                  <div style={styles.tag}> {item.course.grade} 年级 {item.class_id} 班</div>
                 </div>
                 <div style={styles.footer}>
                   <a href="#" style={{ ...styles.link, ...styles.line }}>
-                    <Icon type="office" size="small" style={styles.icon} />{' '}
-                    文档帮助
+                    <Icon type="office" size="small" style={styles.icon} />
+                    课程介绍
                   </a>
                   <a href="#" style={styles.link}>
                     <Icon type="box" size="small" style={styles.icon} />
-                    权限申请
+                    认领班级
                   </a>
                 </div>
               </IceContainer>
