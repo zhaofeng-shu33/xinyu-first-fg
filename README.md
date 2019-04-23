@@ -1,7 +1,7 @@
 [![Travis](https://travis-ci.com/zhaofeng-shu33/xinyu-first-fg.svg?branch=master)](
     https://travis-ci.com/zhaofeng-shu33/xinyu-first-fg)
 ## 测试网址
-[主页](https://programmierung.oss-cn-shenzhen.aliyuncs.com/xinyu/index.html)
+[主页](http://yiqiaifa.leidenschaft.cn)
 
 ## 技术点
 
