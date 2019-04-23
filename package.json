@@ -30,7 +30,7 @@
     "classnames": "^2.2.5",
     "enquire-js": "^0.1.2",
     "history": "^4.7.2",
-    "hoist-non-react-statics": "^2.5.5",
+    "hoist-non-react-statics": "^3.3.0",
     "intl": "^1.2.5",
     "invariant": "^2.2.4",
     "lodash": "^4.17.10",
