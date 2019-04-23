@@ -7,17 +7,9 @@ import UserRegister from './pages/UserRegister';
 import Dashboard from './pages/Dashboard';
 import Charts from './pages/Charts';
 import BaiscCharts from './pages/BaiscCharts';
-import Terms from './pages/Terms';
-import Result from './pages/Result';
-import BasicList from './pages/BasicList';
-import ProjectList from './pages/ProjectList';
-import BasicTable from './pages/BasicTable';
-import GeneralTable from './pages/GeneralTable';
-import Profile from './pages/Profile';
 import Setting from './pages/Setting';
-import Fail from './pages/Fail';
 import UserProfile from './pages/UserProfile';
-import { Empty, Forbidden, NotFound, ServerError } from './pages/Exception';
+import { Forbidden, NotFound, ServerError } from './pages/Exception';
 import { getRouterData } from './utils/utils';
 import { asideMenuConfig } from './menuConfig';
 
@@ -35,38 +27,6 @@ const routerConfig = [
     component: BaiscCharts,
   },
   {
-    path: '/list/basic',
-    component: BasicList,
-  },
-  {
-    path: '/list/general',
-    component: ProjectList,
-  },
-  {
-    path: '/result/success',
-    component: Result,
-  },
-  {
-    path: '/result/fail',
-    component: Fail,
-  },
-  {
-    path: '/table/basic',
-    component: BasicTable,
-  },
-  {
-    path: '/profile/basic',
-    component: Profile,
-  },
-  {
-    path: '/profile/general',
-    component: Terms,
-  },
-  {
-    path: '/table/general',
-    component: GeneralTable,
-  },
-  {
     path: '/account/setting',
     component: Setting,
   },
@@ -81,10 +41,6 @@ const routerConfig = [
   {
     path: '/exception/403',
     component: Forbidden,
-  },
-  {
-    path: '/exception/204',
-    component: Empty,
   },
   {
     path: '/exception/404',
