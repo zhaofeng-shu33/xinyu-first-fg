@@ -6,9 +6,7 @@ export default class Logo extends PureComponent {
   render() {
     return (
       <div className="logo">
-        <Link to="/" className="logo-text">
-          LOGO
-        </Link>
+          <img src={require('./logo.png')} className="logo-image"/>
       </div>
     );
   }
