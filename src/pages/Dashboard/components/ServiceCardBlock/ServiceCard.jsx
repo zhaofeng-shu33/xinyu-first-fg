@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Message, Card } from '@alifd/next';
-import { getClassList } from '../../../../api/class_apply';
+import { Message, Card, Button } from '@alifd/next';
+import { getClassList, applyClass } from '../../../../api/class_apply';
 import { injectIntl } from 'react-intl';
+import { connect } from 'react-redux';
 
 @injectIntl
-export default class ServiceCard extends Component {
+export class ServiceCard extends Component {
   static displayName = 'ServiceCard';
 
   static propTypes = {};
@@ -13,13 +14,38 @@ export default class ServiceCard extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {data:[]};
+    this.state = { data: [] };
   }
   componentDidMount() {
     getClassList().then(json => {
       this.setState({ data: json });
     }).catch(error => {
       Message.error('数据加载失败');
+    })
+  }
+  applyClass(classId, cancel = '') {
+    applyClass(classId).then(json => {
+      if (typeof(json.lawyer) != 'undefined') {
+        Message.success(cancel + '认领班级成功');
+        let original_data = this.state.data.slice();
+        original_data.map((item) => {
+          if (item.pk == classId) {
+            if (cancel == '')
+              item.lawyer = { user: this.props.profile.user.pk }
+            else
+              item.lawyer = null;
+          }
+        })
+        this.setState({ data: original_data });
+      }
+      else if (json.detail) {
+        Message.notice(json.detail);
+      }
+      else {
+        Message.notice(cancel + '认领班级失败');
+      }
+    }).catch (error => {
+      Message.error(cancel + '认领班级失败');
     })
   }
   render() {
@@ -37,7 +63,17 @@ export default class ServiceCard extends Component {
             let date_time_str_2 = date_str_2 + ' ' + time_str_2;
             second_course_info = <p style={styles.desc}>《{item.course_2.name}》<span>上课时间：</span>{date_time_str_2}</p>
           }
-          let class_name = item.course.grade + '年级' +  item.class_id + '班';
+          let class_name = item.course.grade + '年级' + item.class_id + '班';
+          let apply_class_info = null;
+          if (item.lawyer) {
+            apply_class_info = '已被认领';
+            if (this.props.profile.user && this.props.profile.user.pk == item.lawyer.user) {
+              apply_class_info = <div>已认领 <Button onClick={() => { this.applyClass(item.pk, '取消') }}>取消认领</Button></div>;   
+            }
+          }
+          else {
+            apply_class_info = <Button onClick={() => { this.applyClass(item.pk) }}>认领班级</Button>;
+          }
           return (
               <Card key={index} title={item.school} extra={class_name}>
                 <div>
@@ -45,12 +81,12 @@ export default class ServiceCard extends Component {
                 {second_course_info}
                 </div>
               <div style={styles.footer}>
-                <a href="#" style={styles.link}>
-                    课程介绍
-                  </a>
-                <a href="#" style={styles.link}>
-                    认领班级
-                  </a>
+                <div style={styles.link}>
+                    <Button> 课程介绍</Button>
+                  </div>
+                <div style={styles.link}>
+                  {apply_class_info}
+                  </div>
                 </div>
               </Card>
           );
@@ -59,7 +95,15 @@ export default class ServiceCard extends Component {
     );
   }
 }
+const mapStateToProps = (state) => {
+  return { profile: state.profile };
+};
 
+const withConnect = connect(
+  mapStateToProps
+);
+
+export default withConnect(ServiceCard);
 const styles = {
   desc: {
     fontSize: '14px',
@@ -72,9 +116,6 @@ const styles = {
     justifyContent: 'space-around',
   },
   link: {
-    color: '#314659',
-    cursor: 'pointer',
-    textDecoration: 'none',
     width: '50%',
     textAlign: 'center',
   },

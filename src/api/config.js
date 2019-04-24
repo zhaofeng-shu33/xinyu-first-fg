@@ -8,4 +8,4 @@ export const REGISTRATION_URL = API_ENDPOINT + 'rest-auth/registration/';
 export const PASSWORD_CHANGE_URL = API_ENDPOINT + 'rest-auth/password/change/';
 
 // 课程认领相关
-export const CLASS_LIST_URL = API_ENDPOINT + 'xinyu/class/';
+export const CLASS_URL = API_ENDPOINT + 'xinyu/class/';
