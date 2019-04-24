@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Message, Card, Button } from '@alifd/next';
 import { getClassList, applyClass } from '../../../../api/class_apply';
+import { userProfile } from '../../../../store/userProfile/action';
 import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
+import { userProfileUpdate } from '../../../../store/userProfile/action';
 
 @injectIntl
 export class ServiceCard extends Component {
@@ -17,16 +19,21 @@ export class ServiceCard extends Component {
     this.state = { data: [] };
   }
   componentDidMount() {
+    //check whether we need to update user profile
+    if (this.props.profile && this.props.profile.up_to_date == false) {
+      this.props.userProfile();
+    }
     getClassList().then(json => {
       this.setState({ data: json });
     }).catch(error => {
       Message.error('数据加载失败');
     })
   }
-  applyClass(classId, cancel = '') {
+  applyCancelClass(classId, cancel = '') {
     applyClass(classId).then(json => {
       if (typeof(json.lawyer) != 'undefined') {
         Message.success(cancel + '认领班级成功');
+        this.props.userProfileUpdate();
         let original_data = this.state.data.slice();
         original_data.map((item) => {
           if (item.pk == classId) {
@@ -68,11 +75,11 @@ export class ServiceCard extends Component {
           if (item.lawyer) {
             apply_class_info = '已被认领';
             if (this.props.profile.user && this.props.profile.user.pk == item.lawyer.user) {
-              apply_class_info = <div>已认领 <Button onClick={() => { this.applyClass(item.pk, '取消') }}>取消认领</Button></div>;   
+              apply_class_info = <div>已认领 <Button onClick={() => { this.applyCancelClass(item.pk, '取消') }}>取消认领</Button></div>;   
             }
           }
           else {
-            apply_class_info = <Button onClick={() => { this.applyClass(item.pk) }}>认领班级</Button>;
+            apply_class_info = <Button onClick={() => { this.applyCancelClass(item.pk) }}>认领班级</Button>;
           }
           return (
               <Card key={index} title={item.school} extra={class_name}>
@@ -95,12 +102,17 @@ export class ServiceCard extends Component {
     );
   }
 }
+const mapDispatchToProps = {
+  userProfile,
+  userProfileUpdate
+};
 const mapStateToProps = (state) => {
   return { profile: state.profile };
 };
 
 const withConnect = connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 );
 
 export default withConnect(ServiceCard);

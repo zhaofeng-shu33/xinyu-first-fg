@@ -8,10 +8,16 @@ import {
   USER_PROFILE_REQUEST,
   USER_PROFILE_FAILURE,
   USER_PROFILE_SUCCESS,
+  USER_PROFILE_SHOULD_UPDATE,
 } from './constants';
 import { getUserProfile, updateUserProfile } from '../../api/user_backend';
 import { Message } from '@alifd/next';
 
+export const userProfileUpdate = () => {
+  return {
+    type: USER_PROFILE_SHOULD_UPDATE
+  }
+}
 export const userProfileRequest = () => {
   return {
     type: USER_PROFILE_REQUEST,
