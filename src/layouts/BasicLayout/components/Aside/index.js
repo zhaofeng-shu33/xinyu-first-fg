@@ -86,7 +86,6 @@ export default class Aside extends Component {
   onOpenChange = (openKeys) => {
     this.setState({
       openKeys,
-      openDrawer: false,
     });
     this.openKeysCache = openKeys;
   };
@@ -181,7 +180,7 @@ export default class Aside extends Component {
       >
         {isMobile && <Logo />}
 
-        {isMobile && !openDrawer && (
+        {isMobile  && (
           <a className="menu-btn" onClick={this.toggleMenu}>
             <FoundationSymbol type="menu" size="small" />
           </a>
