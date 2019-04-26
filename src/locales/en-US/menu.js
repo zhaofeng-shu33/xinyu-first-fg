@@ -1,7 +1,7 @@
 export default {
   // Aside Menu
   'app.menu.dashboard': 'Dashboard',
-  'app.menu.dashboard.monitor': 'Monitor',
+  'app.menu.dashboard.monitor': 'Course List',
 
   'app.menu.chart': 'Chart',
   'app.menu.chart.basic': 'Basic Chart',
@@ -21,6 +21,7 @@ export default {
 
   'app.menu.account': 'Account',
   'app.menu.account.setting': 'Account Setting',
+  'app.menu.account.user': 'User Profile',
 
   'app.menu.result': 'Result',
   'app.menu.result.success': 'Success',
