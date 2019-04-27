@@ -70,7 +70,7 @@ export class ServiceCard extends Component {
             let date_time_str_2 = date_str_2 + ' ' + time_str_2;
             second_course_info = <p style={styles.desc}>《{item.course_2.name}》<span>上课时间：</span>{date_time_str_2}</p>
           }
-          let class_name = item.course.grade + '年级' + item.class_id + '班';
+          let class_name = item.grade + '年级' + item.class_id + '班';
           let apply_class_info = null;
           if (item.lawyer) {
             apply_class_info = '已被认领';
