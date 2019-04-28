@@ -5,6 +5,7 @@ import { userProfile } from '../../../../store/userProfile/action';
 import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { userProfileUpdate } from '../../../../store/userProfile/action';
+import { Waypoint } from 'react-waypoint';
 
 @injectIntl
 export class ServiceCard extends Component {
@@ -16,8 +17,9 @@ export class ServiceCard extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { data: [], current: 1, count: 100 };
+    this.state = { data: [], current: 1, count: 100};
     this.handlePaginationChange = this.handlePaginationChange.bind(this);
+    this.handleWaypointEnter = this.handleWaypointEnter.bind(this);
   }
   handlePaginationChange(current) {
     getClassList(current).then(json => {
@@ -39,6 +41,15 @@ export class ServiceCard extends Component {
     }).catch(error => {
       Message.error('数据加载失败');
     })
+  }
+  handleWaypointEnter(){
+    getClassList(this.state.current + 1).then(json => {
+      let new_data = this.state.data.slice();
+      new_data = new_data.concat(json.results);
+      this.setState({ data: new_data, current: this.state.current + 1 });
+    }).catch(error => {
+      Message.error('数据加载失败');
+    })    
   }
   applyCancelClass(classId, cancel = '') {
     applyClass(classId).then(json => {
@@ -112,9 +123,11 @@ export class ServiceCard extends Component {
               </Card>
           );
         })}
-        {!this.props.isMobile && (<div style={styles.pagination}>
+        {this.props.isMobile ? <Waypoint onEnter={this.handleWaypointEnter}/> : 
+        (<div style={styles.pagination}>
           <Pagination current={this.state.current} onChange={this.handlePaginationChange} total={this.state.count}/>
         </div>)}
+        
       </div>
     );
   }
