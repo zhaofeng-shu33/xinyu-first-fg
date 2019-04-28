@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Message, Card, Button } from '@alifd/next';
+import { Message, Card, Button, Pagination } from '@alifd/next';
 import { getClassList, applyClass } from '../../../../api/class_apply';
 import { userProfile } from '../../../../store/userProfile/action';
 import { injectIntl } from 'react-intl';
@@ -16,7 +16,18 @@ export class ServiceCard extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { data: [] };
+    this.state = { data: [], current: 1, count: 100 };
+    this.handlePaginationChange = this.handlePaginationChange.bind(this);
+  }
+  handlePaginationChange(current) {
+    getClassList(current).then(json => {
+      this.setState({ data: json.results });
+    }).catch(error => {
+      Message.error('数据加载失败');
+    })    
+    this.setState({
+      current
+    });
   }
   componentDidMount() {
     //check whether we need to update user profile
@@ -24,7 +35,7 @@ export class ServiceCard extends Component {
       this.props.userProfile();
     }
     getClassList().then(json => {
-      this.setState({ data: json });
+      this.setState({ data: json.results, count: json.count });
     }).catch(error => {
       Message.error('数据加载失败');
     })
@@ -58,6 +69,9 @@ export class ServiceCard extends Component {
   render() {
     return (
       <div>
+        {!this.props.isMobile && (<div style={styles.pagination}>
+          <Pagination current={this.state.current} onChange={this.handlePaginationChange}  total={this.state.count}/>
+        </div>)}
         {this.state.data.map((item, index) => {
           let date = new Date(item.start_time);
           let date_str = this.props.intl.formatDate(date);
@@ -98,6 +112,9 @@ export class ServiceCard extends Component {
               </Card>
           );
         })}
+        {!this.props.isMobile && (<div style={styles.pagination}>
+          <Pagination current={this.state.current} onChange={this.handlePaginationChange} total={this.state.count}/>
+        </div>)}
       </div>
     );
   }
@@ -107,7 +124,7 @@ const mapDispatchToProps = {
   userProfileUpdate
 };
 const mapStateToProps = (state) => {
-  return { profile: state.profile };
+  return { profile: state.profile, isMobile: state.isMobile };
 };
 
 const withConnect = connect(
@@ -131,4 +148,7 @@ const styles = {
     width: '50%',
     textAlign: 'center',
   },
+  pagination: {
+    textAlign: 'center'
+  }
 };
