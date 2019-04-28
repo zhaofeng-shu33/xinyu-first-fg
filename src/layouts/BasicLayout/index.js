@@ -38,8 +38,6 @@ export default class BasicLayout extends Component {
     const isDesktop = 'screen and (min-width: 1200px)';
 
     enquire.register(isMobile, this.enquireScreenHandle('isMobile'));
-    enquire.register(isTablet, this.enquireScreenHandle('isTablet'));
-    enquire.register(isDesktop, this.enquireScreenHandle('isDesktop'));
   };
 
   enquireScreenHandle = (type) => {
@@ -48,6 +46,9 @@ export default class BasicLayout extends Component {
         this.setState({
           isScreen: type,
         });
+        if(type == 'isMobile'){
+          this.props.setMobile();
+        }
       },
     };
 
