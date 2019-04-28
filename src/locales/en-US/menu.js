@@ -36,8 +36,8 @@ export default {
   // Top Header
   'app.header.feedback': 'Feedback',
   'app.header.help': 'Help',
-  'app.header.user.name': 'Tao',
-  'app.header.user.department': 'Tech',
+  'app.header.user.name': 'Guest',
+  'app.header.user.department': 'not login',
   'app.header.user.setting': 'Setting',
   'app.header.user.logout': 'Logout',
 };

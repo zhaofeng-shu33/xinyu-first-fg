@@ -1,6 +1,6 @@
 export default {
   // Aside Menu
-  'app.menu.dashboard': 'Dashboard',
+  'app.menu.dashboard': '仪表板',
   'app.menu.dashboard.monitor': '课程页',
 
   'app.menu.chart': '图表页',
@@ -37,7 +37,7 @@ export default {
   'app.header.feedback': '反馈',
   'app.header.help': '帮助',
   'app.header.user.name': '游客',
-  'app.header.user.department': '技术部',
+  'app.header.user.department': '未登录',
   'app.header.user.setting': '设置',
   'app.header.user.logout': '退出',
 };
