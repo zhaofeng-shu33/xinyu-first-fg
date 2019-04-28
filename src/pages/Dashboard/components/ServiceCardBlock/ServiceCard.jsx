@@ -124,7 +124,7 @@ const mapDispatchToProps = {
   userProfileUpdate
 };
 const mapStateToProps = (state) => {
-  return { profile: state.profile, isMobile: state.isMobile };
+  return { profile: state.profile };
 };
 
 const withConnect = connect(
