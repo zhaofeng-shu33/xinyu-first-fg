@@ -179,7 +179,7 @@ class SettingsForm extends Component {
               >
                 <Select name="law_firm">
                   <Select.Option value="广东广和律师事务所">广东广和律师事务所</Select.Option>
-                  <Select.Option value="维德普法">维德普法</Select.Option>
+                  <Select.Option value="维德法律服务中心">维德法律服务中心</Select.Option>
                   <Select.Option value="广东中矩律师事务所">广东中矩律师事务所</Select.Option>
                 </Select>
 
