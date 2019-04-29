@@ -11,12 +11,11 @@
  */
 import {
   USER_LOGIN_REQUEST,
-  USER_LOGIN_SUCCESS,
-  USER_LOGIN_FAILURE,
+  USER_LOGIN_RESULT
 } from './constants';
 
 // The initial state of the login
-const initialState = {};
+const initialState = {isLoading: false};
 
 function loginReducer(state = initialState, action) {
   switch (action.type) {
@@ -24,14 +23,9 @@ function loginReducer(state = initialState, action) {
       return Object.assign({}, state, {
         isLoading: action.isLoading,
       });
-    case USER_LOGIN_SUCCESS:
+    case USER_LOGIN_RESULT:
       return Object.assign({}, state, {
-        isLoading: action.isLoading,
-        loginResult: action.payload,
-      });
-    case USER_LOGIN_FAILURE:
-      return Object.assign({}, state, {
-        isLoading: action.isLoading,
+        isLoading: action.isLoading
       });
     default:
       return state;

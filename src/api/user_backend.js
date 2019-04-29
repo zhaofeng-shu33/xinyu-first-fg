@@ -1,12 +1,19 @@
 /**
- * 请求真正的后端
- */
+ * 请求真正的后端，本文件导出的接口函数有
+ * getUserProfile
+ * updateUserProfile
+ * login
+ * postUserRegister（提交用户注册所填的信息）
+ * postUserLogout
+ * passwordChange
+ **/
 import {
   LOGIN_URL, PROFILE_URL,
   LOGOUT_URL, REGISTRATION_URL,
   PASSWORD_CHANGE_URL
 } from './config.js';
 import { getKey, setKey, removeKey } from './key.js';
+
 export async function getUserProfile() {
   let data = {};
   let key = getKey();
@@ -42,9 +49,12 @@ export async function updateUserProfile(params) {
   }
   return { data };
 } 
+// this function should be wrapped in a try and catch module.
+// params = {'username':'', 'password':''}
+// return = {'status': http_status_code, 'statusText': ''}
 export async function login(params) {
     let data_send = JSON.stringify(params);
-    let data = {};
+    let data = {status: 0};
     let config =  {
         body: data_send,
         headers: {
@@ -52,31 +62,34 @@ export async function login(params) {
         },
         method: 'POST'
     };
-    const response = await fetch(LOGIN_URL, config);
-    const json = await response.json();
+    let response = null;
+    try{
+       response = await fetch(LOGIN_URL, config);      
+    }
+    catch(e){
+       data.statusText = '网络错误';
+       return data;
+    }
+    data.status = response.status;
+    let json = null;
+    try{
+       json = await response.json();
+    }
+    catch(e){
+        data.statusText = '格式错误';
+        return data;
+    }
     if(json.password || json.non_field_errors){
-        data = await {
-            status: 401,
-            statusText: '用户名或密码错误',
-            currentAuthority: 'guest'
-        }
+        data.statusText = '用户名或密码错误';
     }  
     else if (json.key) {
         setKey(json.key);
-        data = await {
-            status: 200,
-            statusText: 'ok',
-            currentAuthority: 'user'
-        }
+        data.statusText = 'ok';       
     }
-    else{
-        data = await {
-            status: 401,
-            statusText: '未知错误',
-            currentAuthority: 'guest'
-        }
+    else {
+        data.statusText = '未知错误';
     }
-    return { data };
+    return data;
 }
   
 export async function postUserRegister(params) {

@@ -3,12 +3,10 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import FoundationSymbol from '@icedesign/foundation-symbol';
 import { Input, Checkbox, Grid, Form } from '@alifd/next';
+import { Message } from '@alifd/next';
 
 import { connect } from 'react-redux';
-import { compose } from 'redux';
-import injectReducer from '../../utils/injectReducer';
 import { userLogin } from './actions';
-import reducer from './reducer';
 
 const Icon = FoundationSymbol;
 const { Row } = Grid;
@@ -40,10 +38,14 @@ class UserLogin extends Component {
 
   handleSubmit = (values, errors) => {
     if (errors) {
-      console.log('errors', errors);
       return;
     }
-    this.props.userLogin(values);
+    this.props.userLogin(values).then((response)=>{
+      if(response.status != 200){
+        Message.error(response.statusText);
+      }
+      Message.success('登录成功');
+    })
   };
 
   render() {
@@ -103,18 +105,11 @@ const mapDispatchToProps = {
   userLogin,
 };
 
-const mapStateToProps = (state) => {
-  return { loginResult: state.login };
-};
 
 const withConnect = connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 );
 
-const withReducer = injectReducer({ key: 'login', reducer });
 
-export default compose(
-  withReducer,
-  withConnect
-)(UserLogin);
+export default withConnect(UserLogin);

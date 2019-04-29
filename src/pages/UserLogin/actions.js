@@ -16,14 +16,12 @@
  */
 
 import { push } from 'react-router-redux';
-import { Message } from '@alifd/next';
 import { login } from '../../api/user_backend';
 import { setAuthority } from '../../utils/authority';
 import { reloadAuthorized } from '../../utils/Authorized';
 import {
   USER_LOGIN_REQUEST,
-  USER_LOGIN_SUCCESS,
-  USER_LOGIN_FAILURE,
+  USER_LOGIN_RESULT,
 } from './constants';
 
 /**
@@ -40,42 +38,27 @@ const userLoginRequest = () => {
   };
 };
 
-const userLoginSuccess = (payload) => {
-  return {
-    type: USER_LOGIN_SUCCESS,
-    payload,
-    isLoading: false,
-  };
-};
 
-const userLoginFailure = (payload) => {
+
+const userLoginResult = () => {
   return {
-    type: USER_LOGIN_FAILURE,
-    payload,
+    type: USER_LOGIN_RESULT,
     isLoading: false,
   };
 };
 
 export const userLogin = (params) => {
   return async (dispatch) => {
-    dispatch(userLoginRequest());
-    try {
+      dispatch(userLoginRequest());
       const response = await login(params);
 
-      dispatch(userLoginSuccess(response.data));
+      dispatch(userLoginResult());
 
-      if (response.data.status === 200) {
-        Message.success('登录成功');
-        setAuthority(response.data.currentAuthority);
+      if (response.status === 200) {
+        setAuthority('user');
         reloadAuthorized();
         dispatch(push('/'));
-      } else {
-        Message.error('账号或者密码错误');
       }
-
-      return response.data;
-    } catch (error) {
-      dispatch(userLoginFailure(error));
-    }
+      return response; 
   };
 };

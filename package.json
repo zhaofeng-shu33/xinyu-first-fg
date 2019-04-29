@@ -46,11 +46,13 @@
     "react-router-redux": "5.0.0-alpha.6",
     "react-waypoint": "^9.0.2",
     "redux": "3.6.0",
+    "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "uglifyjs-webpack-plugin": "^2.1.2",
     "urllib": "^2.33.3"
   },
   "devDependencies": {
+    "@babel/core": "^7.4.4",
     "babel-eslint": "^8.0.3",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "eslint": "^4.13.1",

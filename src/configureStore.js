@@ -11,6 +11,11 @@ export default function configureStore(initialState = {}, history) {
   // Create the store with  middlewares
   // routerMiddleware: Syncs the location/URL path to the state
   const middlewares = [thunk, routerMiddleware(history)];
+  if (process.env.NODE_ENV === `development`) {
+    const { logger } = require(`redux-logger`);
+   
+    middlewares.push(logger);
+  }  
 
   const enhancers = [applyMiddleware(...middlewares)];
 
