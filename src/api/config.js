@@ -1,4 +1,8 @@
-export const API_ENDPOINT = 'http://127.0.0.1:8000/';
+let API_ENDPOINT_INNER = 'http://leidenschaft.cn/django/';
+if (process.env.NODE_ENV === `development`) {
+  API_ENDPOINT_INNER = 'http://127.0.0.1:8000/';
+}
+export const API_ENDPOINT = API_ENDPOINT_INNER;
 
 // 用户管理相关
 export const LOGIN_URL = API_ENDPOINT + 'rest-auth/login/';
