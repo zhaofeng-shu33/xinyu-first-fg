@@ -29,6 +29,7 @@ const routerConfig = [
   {
     path: '/account/setting',
     component: Setting,
+    authority: 'user',
   },
   {
     path: '/account/user',

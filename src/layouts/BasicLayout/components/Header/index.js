@@ -10,20 +10,27 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { headerMenuConfig } from '../../../../menuConfig';
 import SelectLang from '../../../../components/SelectLang';
 import Logo from '../Logo';
-
+import { getAuthority } from '../../../../utils/authority';
 import './index.scss';
 
 @injectIntl
 @withRouter
 export default class Header extends Component {
+  constructor(props) {
+    super(props);
+    // default identify is guest
+    this.state = { identify: 'guest'};
+  }
   handleSetting = () => {
-    this.props.history.push('/account/setting');
+    this.props.history.push('/account/user');
   };
 
   getLocaleKey = (item) => {
     return `app.header.${item.name}`;
   };
-
+  componentDidMount() {
+    this.setState({ 'identity': getAuthority() });
+  }
   render() {
     const {
       isMobile,
@@ -114,6 +121,7 @@ export default class Header extends Component {
             className="user-profile-menu"
           >
             <ul>
+              {this.state.identity != 'guest' &&
               <li
                 className="user-profile-menu-item"
                 onClick={this.handleSetting}
@@ -121,6 +129,7 @@ export default class Header extends Component {
                 <FoundationSymbol type="repair" size="small" />
                 <FormattedMessage id="app.header.user.setting" />
               </li>
+              }
               <li
                 className="user-profile-menu-item"
                 onClick={this.props.handleLogout}
