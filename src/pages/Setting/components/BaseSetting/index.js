@@ -43,23 +43,12 @@ class SettingsForm extends Component {
     this.state = {
       value: {
         username: '',          
-        gender: 'male',
-        notice: false,
         email: '',
-        avatar: [],
         law_firm: '',
-        description: '',
       },
       isInitialized: false
     };
   }
-  onDragOver = () => {
-    console.log('dragover callback');
-  };
-
-  onDrop = (fileList) => {
-    console.log('drop callback : ', fileList);
-  };
 
   formChange = (value) => {
     this.setState({
@@ -118,47 +107,7 @@ class SettingsForm extends Component {
               >
                 <Input name="username" placeholder="taoxiaobao"/>
               </FormItem>
-              <FormItem
-                label={formatMessage({ id: 'app.setting.avatar' })}
-                {...formItemLayout}                
-                requiredMessage={formatMessage({
-                  id: 'app.setting.avatar.message',
-                })}
-              >
-                <Upload.Card
-                  name="avatar"
-                  listType="card"
-                  action=""
-                  accept="image/png, image/jpg, image/jpeg, image/gif, image/bmp"
-                  beforeUpload={beforeUpload}
-                  onChange={onChange}
-                  onSuccess={onSuccess}
-                  onError={onError}
-                />
-              </FormItem>
-              <FormItem
-                label={formatMessage({ id: 'app.setting.gender' })}
-                {...formItemLayout}
-                requiredMessage={formatMessage({
-                  id: 'app.setting.gender.message',
-                })}
-              >
-                <RadioGroup name="gender">
-                  <Radio value="male">
-                    <FormattedMessage id="app.setting.male" />
-                  </Radio>
-                  <Radio value="female">
-                    <FormattedMessage id="app.setting.female" />
-                  </Radio>
-                </RadioGroup>
-              </FormItem>
 
-              <FormItem
-                label={formatMessage({ id: 'app.setting.notification' })}
-                {...formItemLayout}
-              >
-                <Switch name="notice" />
-              </FormItem>
               <FormItem
                 label={formatMessage({ id: 'app.setting.email' })}
                 {...formItemLayout}
@@ -185,13 +134,6 @@ class SettingsForm extends Component {
 
               </FormItem>
 
-
-              <FormItem
-                label={formatMessage({ id: 'app.setting.description' })}
-                {...formItemLayout}
-              >
-                <Input.TextArea placeholder="请输入描述..." />
-              </FormItem>
               <Row style={{ marginTop: 20 }}>
                 <Col offset="3">
                   <Form.Submit
