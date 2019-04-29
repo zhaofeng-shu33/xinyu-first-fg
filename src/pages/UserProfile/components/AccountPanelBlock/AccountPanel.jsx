@@ -156,14 +156,14 @@ class AccountPanel extends Component {
               let date_str_2 = this.props.intl.formatDate(date_2);
               let time_str_2 = this.props.intl.formatTime(date_2);
               let date_time_str_2 = date_str_2 + ' ' + time_str_2;
-              second_course_info = <p style={styles.desc}>{item.course_2.name}<span>上课时间：</span>{date_time_str_2}</p>
+              second_course_info = <p style={styles.desc}>{item.course_2}<span>上课时间：</span>{date_time_str_2}</p>
             }
             let class_name = item.grade + '年级' + item.class_id + '班';
             let apply_class_info = <Button onClick={() => { this.cancelClass(item.pk) }}>取消认领</Button>;              
             return (
               <Card key={index} title={item.school} extra={class_name}>
                 <div>
-                  <p style={styles.desc}>{item.course.name}<span>上课时间：</span>{date_str + ' ' + time_str}</p>
+                  <p style={styles.desc}>{item.course}<span>上课时间：</span>{date_str + ' ' + time_str}</p>
                   {second_course_info}
                 </div>
                 <div style={styles.footer}>
