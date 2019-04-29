@@ -2,7 +2,11 @@
 import { CLASS_URL } from './config';
 import { getKey } from './key';
 export async function getClassList(page = 1) {
-  const response = await fetch(CLASS_URL + '?page='+ page);
+  const response = await fetch(CLASS_URL + '?page=' + page, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
   return response.json(); // a promise object
 }
 export async function applyClass(classId) {

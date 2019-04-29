@@ -17,7 +17,7 @@ export class ServiceCard extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { data: [], current: 1, count: 100};
+    this.state = { data: [], current: 1, count: 100, isLoadingFirst: true};
     this.handlePaginationChange = this.handlePaginationChange.bind(this);
     this.handleWaypointEnter = this.handleWaypointEnter.bind(this);
   }
@@ -36,13 +36,17 @@ export class ServiceCard extends Component {
     if (this.props.profile && this.props.profile.up_to_date == false) {
       this.props.userProfile();
     }
+    if (this.state.data.length > 0)
+      return;
     getClassList().then(json => {
-      this.setState({ data: json.results, count: json.count });
+      this.setState({ data: json.results, count: json.count, isLoadingFirst: false });
     }).catch(error => {
       Message.error('数据加载失败');
     })
   }
-  handleWaypointEnter(){
+  handleWaypointEnter() {
+    if (this.state.isLoadingFirst)
+      return;
     getClassList(this.state.current + 1).then(json => {
       let new_data = this.state.data.slice();
       new_data = new_data.concat(json.results);
@@ -93,7 +97,7 @@ export class ServiceCard extends Component {
             let date_str_2 = this.props.intl.formatDate(date_2);
             let time_str_2 = this.props.intl.formatTime(date_2);
             let date_time_str_2 = date_str_2 + ' ' + time_str_2;
-            second_course_info = <p style={styles.desc}>{item.course_2}<span>上课时间：</span>{date_time_str_2}</p>
+            second_course_info = <p style={styles.desc}>{item.course_2.name}<span>上课时间：</span>{date_time_str_2}</p>
           }
           let class_name = item.grade + '年级' + item.class_id + '班';
           let apply_class_info = null;
@@ -109,7 +113,7 @@ export class ServiceCard extends Component {
           return (
               <Card key={index} title={item.school} extra={class_name}>
                 <div>
-                <p style={styles.desc}>{item.course}<span>上课时间：</span>{date_str + ' ' + time_str}</p>
+                <p style={styles.desc}>{item.course.name}<span>上课时间：</span>{date_str + ' ' + time_str}</p>
                 {second_course_info}
                 </div>
               <div style={styles.footer}>
