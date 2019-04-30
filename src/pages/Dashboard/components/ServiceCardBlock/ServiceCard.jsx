@@ -88,17 +88,6 @@ export class ServiceCard extends Component {
           <Pagination current={this.state.current} onChange={this.handlePaginationChange}  total={this.state.count}/>
         </div>)}
         {this.state.data.map((item, index) => {
-          let date = new Date(item.start_time);
-          let date_str = this.props.intl.formatDate(date);
-          let time_str = this.props.intl.formatTime(date);
-          let second_course_info = null;
-          if (item.start_time_2) {
-            let date_2 = new Date(item.start_time_2);
-            let date_str_2 = this.props.intl.formatDate(date_2);
-            let time_str_2 = this.props.intl.formatTime(date_2);
-            let date_time_str_2 = date_str_2 + ' ' + time_str_2;
-            second_course_info = <p style={styles.desc}>{item.course_2}<span>上课时间：</span>{date_time_str_2}</p>
-          }
           let class_name = item.grade + '年级' + item.class_id + '班';
           let apply_class_info = null;
           if (item.lawyer) {
@@ -113,8 +102,16 @@ export class ServiceCard extends Component {
           return (
               <Card key={index} title={item.school} extra={class_name}>
                 <div>
-                <p style={styles.desc}>{item.course}<span>上课时间：</span>{date_str + ' ' + time_str}</p>
-                {second_course_info}
+                {item.lectures.map((inner_item, inner_index) => {
+                  let date_time_str = '未确定时间';
+                  if (inner_item.start_time) {
+                    let date = new Date(inner_item.start_time);
+                    let date_str = this.props.intl.formatDate(date);
+                    let time_str = this.props.intl.formatTime(date);
+                    date_time_str = date_str + ' ' + time_str;
+                  }
+                  return (<p key={inner_index} style={styles.desc}>{inner_item.course}<span>上课时间：</span>{date_time_str}</p>);
+                })}
                 </div>
               <div style={styles.footer}>
                 <div style={styles.link}>
