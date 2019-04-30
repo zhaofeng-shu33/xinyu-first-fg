@@ -41,19 +41,28 @@ export const userProfileFailure = (payload) => {
   };
 };
 
-export const userProfile = (params = null) => {
+export const userProfile = () => {
   return async (dispatch) => {
     dispatch(userProfileRequest());
     try {
       let response = {};
-      if (params) {
+        response = await getUserProfile();
+
+      dispatch(userProfileSuccess(response.data));
+    } catch (error) {
+      dispatch(userProfileFailure(error));
+    }
+  };
+};
+
+export const userProfilePut = (params) => {
+  return async (dispatch) => {
+    dispatch(userProfileRequest());
+    try {
+        let response = {};
         response = await updateUserProfile(params);
         Message.success('更新成功');
-      }
-      else {
-        response = await getUserProfile();
-      }
-      dispatch(userProfileSuccess(response.data));
+        dispatch(userProfileSuccess(response.data));
     } catch (error) {
       dispatch(userProfileFailure(error));
     }

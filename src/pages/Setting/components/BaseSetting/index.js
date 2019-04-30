@@ -2,10 +2,10 @@
 import React, { Component } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import IceContainer from '@icedesign/container';
-import { Input, Radio, Switch, Upload, Grid, Form, Select } from '@alifd/next';
+import { Input, Grid, Form, Select } from '@alifd/next';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { userProfile } from '../../../../store/userProfile/action';
+import { userProfilePut } from '../../../../store/userProfile/action';
 import { getOffice } from '../../../../api/lawyer';
 const { Row, Col } = Grid;
 const FormItem = Form.Item;
@@ -28,7 +28,7 @@ class SettingsForm extends Component {
       value: {
         username: '',          
         email: '',
-        office_name: '', //store office_name        
+        office_id: 1, //store office_id        
       },
       isInitialized: false,
       office_list: []
@@ -49,8 +49,8 @@ class SettingsForm extends Component {
     console.log('error', errors, 'value', values);
     if (!errors) {
       // 提交当前填写的数据
-      this.props.userProfile({
-        office: { id: 1, name: values.office_name },
+      this.props.userProfilePut({
+        office: values.office_id,
         user: {
           username: values.username,
           email: values.email,
@@ -66,7 +66,7 @@ class SettingsForm extends Component {
       let username = user.username;
       let email = user.email;
       let office = props.profile.office ? props.profile.office : {};
-      return { value: { username, email, office_name: office.name }, isInitialized: true }
+      return { value: { username, email, office_id: office.id }, isInitialized: true }
     }
     else
       return null;
@@ -115,9 +115,9 @@ class SettingsForm extends Component {
                   id: 'app.setting.law_firm',
                 })}
               >
-                <Select name="office_name">
+                <Select name="office_id">
                   {this.state.office_list.map((item) => {
-                    return (<Select.Option value={item.name} key={item.id}>{item.name}</Select.Option>);
+                    return (<Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>);
                   })}
                 </Select>
 
@@ -162,7 +162,7 @@ const styles = {
   },
 };
 const mapDispatchToProps = {
-  userProfile,
+  userProfilePut,
 };
 const mapStateToProps = (state) => {
   return { profile: state.profile };
