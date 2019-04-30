@@ -143,7 +143,7 @@ class AccountPanel extends Component {
         </div>
         <div style={styles.infoRow}>
           <div style={styles.infoLabel}>律所</div>
-          <div style={styles.infoDetail}>{this.state.profile.law_firm}</div>
+          <div style={styles.infoDetail}>{this.state.profile.office ? this.state.profile.office.name: null}</div>
         </div>
         <div>
           {this.state.profile.lawyer_classes && this.state.profile.lawyer_classes.map((item, index) => {

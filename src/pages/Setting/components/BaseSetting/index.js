@@ -6,30 +6,14 @@ import { Input, Radio, Switch, Upload, Grid, Form, Select } from '@alifd/next';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { userProfile } from '../../../../store/userProfile/action';
+import { getOffice } from '../../../../api/lawyer';
 const { Row, Col } = Grid;
-const { Group: RadioGroup } = Radio;
 const FormItem = Form.Item;
 
 const formItemLayout = {
   labelCol: { xxs: 6, s: 3, l: 3 },
   wrapperCol: { s: 12, l: 10 },
 };
-
-function beforeUpload(info) {
-  console.log('beforeUpload callback : ', info);
-}
-
-function onChange(info) {
-  console.log('onChane callback : ', info);
-}
-
-function onSuccess(res, file) {
-  console.log('onSuccess callback : ', res, file);
-}
-
-function onError(file) {
-  console.log('onError callback : ', file);
-}
 
 class SettingsForm extends Component {
   static displayName = 'SettingsForm';
@@ -44,9 +28,10 @@ class SettingsForm extends Component {
       value: {
         username: '',          
         email: '',
-        law_firm: '',
+        office_id: 1, //store office_id        
       },
-      isInitialized: false
+      isInitialized: false,
+      office_list: []
     };
   }
 
@@ -55,13 +40,17 @@ class SettingsForm extends Component {
       value,
     });
   };
-
+  componentDidMount() {
+    getOffice().then((json) => {
+      this.setState({ office_list: json });
+    })
+  }
   validateAllFormField = (values, errors) => {
     console.log('error', errors, 'value', values);
     if (!errors) {
       // 提交当前填写的数据
       this.props.userProfile({
-        law_firm: values.law_firm,
+        office: this.state.office_list[values.office_id-1],
         user: {
           username: values.username,
           email: values.email,
@@ -76,8 +65,8 @@ class SettingsForm extends Component {
     if (user && !state.isInitialized) {
       let username = user.username;
       let email = user.email;
-      let law_firm = props.profile.law_firm ? props.profile.law_firm : '';
-      return { value: { username, email, law_firm }, isInitialized: true }
+      let office = props.profile.office ? props.profile.office : {};
+      return { value: { username, email, office_id: office.id }, isInitialized: true }
     }
     else
       return null;
@@ -126,10 +115,10 @@ class SettingsForm extends Component {
                   id: 'app.setting.law_firm',
                 })}
               >
-                <Select name="law_firm">
-                  <Select.Option value="广东广和律师事务所">广东广和律师事务所</Select.Option>
-                  <Select.Option value="维德法律服务中心">维德法律服务中心</Select.Option>
-                  <Select.Option value="广东中矩律师事务所">广东中矩律师事务所</Select.Option>
+                <Select name="office_id">
+                  {this.state.office_list.map((item) => {
+                    return (<Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>);
+                  })}
                 </Select>
 
               </FormItem>

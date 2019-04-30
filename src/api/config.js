@@ -13,3 +13,6 @@ export const PASSWORD_CHANGE_URL = API_ENDPOINT + 'rest-auth/password/change/';
 
 // 课程认领相关
 export const CLASS_URL = API_ENDPOINT + 'xinyu/class/';
+
+// 律师相关
+export const LAWYER_OFFICE_LIST_URL = API_ENDPOINT + 'xinyu/lawyeroffice/';
