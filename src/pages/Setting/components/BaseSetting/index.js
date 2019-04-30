@@ -28,7 +28,7 @@ class SettingsForm extends Component {
       value: {
         username: '',          
         email: '',
-        office_id: 1, //store office_id        
+        office_name: '', //store office_name        
       },
       isInitialized: false,
       office_list: []
@@ -50,7 +50,7 @@ class SettingsForm extends Component {
     if (!errors) {
       // 提交当前填写的数据
       this.props.userProfile({
-        office: this.state.office_list[values.office_id-1],
+        office: { id: 1, name: values.office_name },
         user: {
           username: values.username,
           email: values.email,
@@ -66,7 +66,7 @@ class SettingsForm extends Component {
       let username = user.username;
       let email = user.email;
       let office = props.profile.office ? props.profile.office : {};
-      return { value: { username, email, office_id: office.id }, isInitialized: true }
+      return { value: { username, email, office_name: office.name }, isInitialized: true }
     }
     else
       return null;
@@ -115,9 +115,9 @@ class SettingsForm extends Component {
                   id: 'app.setting.law_firm',
                 })}
               >
-                <Select name="office_id">
+                <Select name="office_name">
                   {this.state.office_list.map((item) => {
-                    return (<Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>);
+                    return (<Select.Option value={item.name} key={item.id}>{item.name}</Select.Option>);
                   })}
                 </Select>
 
