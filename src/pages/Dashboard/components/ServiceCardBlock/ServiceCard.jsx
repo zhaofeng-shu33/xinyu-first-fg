@@ -64,9 +64,9 @@ export class ServiceCard extends Component {
         original_data.map((item) => {
           if (item.pk == classId) {
             if (cancel == '')
-              item.lawyer = { user: this.props.profile.user.pk }
+              item.lectures[0].lawyer = { user: this.props.profile.user.pk }
             else
-              item.lawyer = null;
+              item.lectures[0].lawyer = null;
           }
         })
         this.setState({ data: original_data });
@@ -90,9 +90,10 @@ export class ServiceCard extends Component {
         {this.state.data.map((item, index) => {
           let class_name = item.grade + '年级' + item.class_id + '班';
           let apply_class_info = null;
-          if (item.lawyer) {
+          let first_class_lawyer = item.lectures[0].lawyer;
+          if (first_class_lawyer) {
             apply_class_info = '已被认领';
-            if (this.props.profile.user && this.props.profile.user.pk == item.lawyer.user) {
+            if (this.props.profile.user && this.props.profile.user.pk == first_class_lawyer.user) {
               apply_class_info = <div>已认领 <Button onClick={() => { this.applyCancelClass(item.pk, '取消') }}>取消认领</Button></div>;   
             }
           }

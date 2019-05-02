@@ -82,15 +82,13 @@ class AccountPanel extends Component {
     applyClass(classId).then(json => {
       if (typeof (json.lawyer) != 'undefined') {
         Message.success('取消认领班级成功');
-        let original_data = this.state.profile.lawyer_classes.slice();
-        let delete_item_index = 0;
-        original_data.map((item, index) => {
-          if (item.pk == classId) {
-            delete_item_index = index;
-          }
-        })
-        original_data.splice(delete_item_index, 1);
-        this.setState({ profile: { lawyer_classes: original_data } });
+        let lawyer_lectures = this.state.profile.lawyer_lectures;
+        let original_data = lawyer_lectures.slice();
+        for (let i = lawyer_lectures.length - 1; i >= 0; i--) {
+          if (lawyer_lectures[i].classroom.pk == classId)
+            original_data.splice(i, 1);
+        }
+        this.setState({ profile: { lawyer_lectures: original_data } });
         this.props.userProfileUpdate();
       }
       else if (json.detail) {
@@ -146,22 +144,20 @@ class AccountPanel extends Component {
           <div style={styles.infoDetail}>{this.state.profile.office ? this.state.profile.office.name: null}</div>
         </div>
         <div>
-          {this.state.profile.lawyer_classes && this.state.profile.lawyer_classes.map((item, index) => {
-            let class_name = item.grade + '年级' + item.class_id + '班';
-            let apply_class_info = <Button onClick={() => { this.cancelClass(item.pk) }}>取消认领</Button>;              
+          {this.state.profile.lawyer_lectures && this.state.profile.lawyer_lectures.map((item, index) => {
+            let class_name = item.classroom.grade + '年级' + item.classroom.class_id + '班';
+            let apply_class_info = <Button onClick={() => { this.cancelClass(item.classroom.pk) }}>取消认领</Button>;
+            let date_time_str = '未确定时间';
+            if (item.start_time) {
+              let date = new Date(item.start_time);
+              let date_str = this.props.intl.formatDate(date);
+              let time_str = this.props.intl.formatTime(date);
+              date_time_str = date_str + ' ' + time_str;
+            }            
             return (
-              <Card key={index} title={item.school} extra={class_name}>
+              <Card key={index} title={item.classroom.school} extra={class_name}>
                 <div>
-                  {item.lectures.map((inner_item, inner_index) => {
-                    let date_time_str = '未确定时间';
-                    if (inner_item.start_time) {
-                      let date = new Date(inner_item.start_time);
-                      let date_str = this.props.intl.formatDate(date);
-                      let time_str = this.props.intl.formatTime(date);
-                      date_time_str = date_str + ' ' + time_str;
-                    }
-                    return (<p key={inner_index} style={styles.desc}>{inner_item.course}<span>上课时间：</span>{date_time_str}</p>);
-                  })}
+                    <p style={styles.desc}>{item.course}<span>上课时间：</span>{date_time_str}</p>
                 </div>
                 <div style={styles.footer}>
                   <div style={styles.link}>
