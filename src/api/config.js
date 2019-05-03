@@ -1,6 +1,8 @@
 let API_ENDPOINT_INNER = 'http://leidenschaft.cn/django/';
 if (process.env.NODE_ENV === `development`) {
-  API_ENDPOINT_INNER = 'http://127.0.0.1:8000/';
+  // django default ip address and port
+  // when running `python setup.py runserver`
+  API_ENDPOINT_INNER = 'http://127.0.0.1:8000/';  
 }
 export const API_ENDPOINT = API_ENDPOINT_INNER;
 
