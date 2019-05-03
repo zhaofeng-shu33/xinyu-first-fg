@@ -8,5 +8,4 @@ install:
   - chmod 755 ossutil64
 script:
   - npm run build
-deploy:
   - if [[branch = master]]; then ./ossutil64 -u -i LTAIhGvOLG5VLaqh -k $APP_SECRET -e http://oss-cn-shenzhen.aliyuncs.com cp -r build/ oss://yiqiaifa/; fi
