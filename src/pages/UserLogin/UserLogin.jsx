@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { userLogin } from './actions';
 
 const Icon = FoundationSymbol;
-const { Row } = Grid;
+const { Row, Col } = Grid;
 const FormItem = Form.Item;
 
 class UserLogin extends Component {
@@ -90,12 +90,16 @@ class UserLogin extends Component {
             </Row>
 
             <Row className="tips">
-              <Link to="/user/register" className="tips-text">
+              <Col span="12" className="tips-container">
+                <Link to="/user/register" className="tips-text">
                 立即注册
               </Link>
-              <Link to="/user/resetpassword" className="tips-text">
+              </Col>
+              <Col span="12" className="tips-container">
+                <Link to="/user/resetpassword" className="tips-text" >
                 重置密码
               </Link>
+              </Col>
             </Row>
           </Form>
         </div>

@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import FoundationSymbol from '@icedesign/foundation-symbol';
-import { Input, Checkbox, Grid, Form } from '@alifd/next';
+import { Input, Grid, Form } from '@alifd/next';
 import { Message } from '@alifd/next';
-
+import FoundationSymbol from '@icedesign/foundation-symbol';
+import { passwordResetRequest } from '../../api/user_backend';
 import { connect } from 'react-redux';
 
-
 const Icon = FoundationSymbol;
-const { Row } = Grid;
+const { Row, Col } = Grid;
 const FormItem = Form.Item;
 
 const userLogin = (params) => {
@@ -52,11 +51,13 @@ class UserForgetPassword extends Component {
     if (errors) {
       return;
     }
-    this.props.userLogin(values).then((response)=>{
-      if(response.status != 200){
-        Message.error(response.statusText);
+    passwordResetRequest(values.email).then((response)=>{
+      if (response.status != 200) {
+        Message.error(response.data.detail);
       }
-      Message.success('登录成功');
+      else {
+        Message.success('重置密码的邮件已发送，请及时查收');
+      }
     })
   };
 
@@ -65,10 +66,10 @@ class UserForgetPassword extends Component {
       <div className="user-login">
         <div className="formContainer">
           <Form value={this.state.value} onChange={this.formChange}>
-            <FormItem required requiredMessage="必填" className="formItem">
+            <FormItem required requiredMessage="请输入正确的邮箱" className="formItem">
               <Input
                 innerBefore={
-                  <Icon type="email" size="small" className="inputIcon" />
+                  <Icon type="mail" size="small" className="inputIcon" />
                 }
                 name="email"
                 maxLength={20}
@@ -85,14 +86,18 @@ class UserForgetPassword extends Component {
                 重置密码
               </Form.Submit>
             </Row>
-
+            
             <Row className="tips">
-              <Link to="/user/register" className="tips-text">
-                注册
+              <Col span="12" className="tips-container">
+                <Link to="/user/register" className="tips-text">
+                  注册
               </Link>
-              <Link to="/user/login" className="tips-text">
-                登录
+              </Col>
+              <Col span="12" className="tips-container">
+                <Link to="/user/login" className="tips-text" >
+                  登录
               </Link>
+              </Col>             
             </Row>
           </Form>
         </div>
