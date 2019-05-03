@@ -1,4 +1,3 @@
-/* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import FoundationSymbol from '@icedesign/foundation-symbol';
@@ -6,14 +5,29 @@ import { Input, Checkbox, Grid, Form } from '@alifd/next';
 import { Message } from '@alifd/next';
 
 import { connect } from 'react-redux';
-import { userLogin } from './actions';
+
 
 const Icon = FoundationSymbol;
 const { Row } = Grid;
 const FormItem = Form.Item;
 
-class UserLogin extends Component {
-  static displayName = 'UserLogin';
+const userLogin = (params) => {
+  return async (dispatch) => {
+    dispatch(userLoginRequest());
+    const response = await login(params);
+
+    dispatch(userLoginResult());
+
+    if (response.status === 200) {
+      setAuthority('user');
+      reloadAuthorized();
+      dispatch(push('/'));
+    }
+    return response;
+  };
+}
+class UserForgetPassword extends Component {
+  static displayName = 'UserForgetPassword';
 
   static propTypes = {};
 
@@ -23,9 +37,7 @@ class UserLogin extends Component {
     super(props);
     this.state = {
       value: {
-        username: '',
-        password: '',
-        checkbox: false,
+        email: '',
       },
     };
   }
@@ -56,27 +68,12 @@ class UserLogin extends Component {
             <FormItem required requiredMessage="必填" className="formItem">
               <Input
                 innerBefore={
-                  <Icon type="person" size="small" className="inputIcon" />
+                  <Icon type="email" size="small" className="inputIcon" />
                 }
-                name="username"
+                name="email"
                 maxLength={20}
-                placeholder="用户名"
+                placeholder="邮箱"
               />
-            </FormItem>
-            <FormItem required requiredMessage="必填" className="formItem">
-              <Input
-                innerBefore={
-                  <Icon type="lock" size="small" className="inputIcon" />
-                }
-                name="password"
-                htmlType="password"
-                placeholder="密码"
-              />
-            </FormItem>
-            <FormItem>
-              <Checkbox name="checkbox" className="checkbox">
-                记住账号
-              </Checkbox>
             </FormItem>
             <Row className="formItem">
               <Form.Submit
@@ -85,16 +82,16 @@ class UserLogin extends Component {
                 onClick={this.handleSubmit}
                 className="submitBtn"
               >
-                登 录
+                重置密码
               </Form.Submit>
             </Row>
 
             <Row className="tips">
               <Link to="/user/register" className="tips-text">
-                立即注册
+                注册
               </Link>
-              <Link to="/user/resetpassword" className="tips-text">
-                重置密码
+              <Link to="/user/login" className="tips-text">
+                登录
               </Link>
             </Row>
           </Form>
@@ -115,4 +112,4 @@ const withConnect = connect(
 );
 
 
-export default withConnect(UserLogin);
+export default withConnect(UserForgetPassword);

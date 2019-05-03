@@ -4,6 +4,7 @@
 
 import UserLogin from './pages/UserLogin';
 import UserRegister from './pages/UserRegister';
+import UserForgetPassword from './pages/UserForgetPassword'
 import Dashboard from './pages/Dashboard';
 import Charts from './pages/Charts';
 import BaiscCharts from './pages/BaiscCharts';
@@ -54,6 +55,10 @@ const routerConfig = [
   {
     path: '/user/register',
     component: UserRegister,
+  },
+  {
+    path: '/user/resetpassword',
+    component: UserForgetPassword,
   },
 ];
 
