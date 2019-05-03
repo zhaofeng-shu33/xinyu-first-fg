@@ -40,7 +40,7 @@ export default class Header extends Component {
     } = this.props;
     console.log(this.props);
     const username = this.props.profile.user ? this.props.profile.user.username: null;
-    const department = this.props.profile.law_firm;
+    const department = this.props.profile.office ? this.props.profile.office.name: null;
     return (
       <Layout.Header
         theme="dark"

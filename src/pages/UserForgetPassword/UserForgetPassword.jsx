@@ -1,19 +1,32 @@
-/* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import FoundationSymbol from '@icedesign/foundation-symbol';
-import { Input, Checkbox, Grid, Form } from '@alifd/next';
+import { Input, Grid, Form } from '@alifd/next';
 import { Message } from '@alifd/next';
-
+import FoundationSymbol from '@icedesign/foundation-symbol';
+import { passwordResetRequest } from '../../api/user_backend';
 import { connect } from 'react-redux';
-import { userLogin } from './actions';
 
 const Icon = FoundationSymbol;
 const { Row, Col } = Grid;
 const FormItem = Form.Item;
 
-class UserLogin extends Component {
-  static displayName = 'UserLogin';
+const userLogin = (params) => {
+  return async (dispatch) => {
+    dispatch(userLoginRequest());
+    const response = await login(params);
+
+    dispatch(userLoginResult());
+
+    if (response.status === 200) {
+      setAuthority('user');
+      reloadAuthorized();
+      dispatch(push('/'));
+    }
+    return response;
+  };
+}
+class UserForgetPassword extends Component {
+  static displayName = 'UserForgetPassword';
 
   static propTypes = {};
 
@@ -23,9 +36,7 @@ class UserLogin extends Component {
     super(props);
     this.state = {
       value: {
-        username: '',
-        password: '',
-        checkbox: false,
+        email: '',
       },
     };
   }
@@ -40,11 +51,13 @@ class UserLogin extends Component {
     if (errors) {
       return;
     }
-    this.props.userLogin(values).then((response)=>{
-      if(response.status != 200){
-        Message.error(response.statusText);
+    passwordResetRequest(values.email).then((response)=>{
+      if (response.status != 200) {
+        Message.error(response.data.detail);
       }
-      Message.success('登录成功');
+      else {
+        Message.success('重置密码的邮件已发送，请及时查收');
+      }
     })
   };
 
@@ -53,30 +66,15 @@ class UserLogin extends Component {
       <div className="user-login">
         <div className="formContainer">
           <Form value={this.state.value} onChange={this.formChange}>
-            <FormItem required requiredMessage="必填" className="formItem">
+            <FormItem required requiredMessage="请输入正确的邮箱" className="formItem">
               <Input
                 innerBefore={
-                  <Icon type="person" size="small" className="inputIcon" />
+                  <Icon type="mail" size="small" className="inputIcon" />
                 }
-                name="username"
+                name="email"
                 maxLength={20}
-                placeholder="用户名"
+                placeholder="邮箱"
               />
-            </FormItem>
-            <FormItem required requiredMessage="必填" className="formItem">
-              <Input
-                innerBefore={
-                  <Icon type="lock" size="small" className="inputIcon" />
-                }
-                name="password"
-                htmlType="password"
-                placeholder="密码"
-              />
-            </FormItem>
-            <FormItem>
-              <Checkbox name="checkbox" className="checkbox">
-                记住账号
-              </Checkbox>
             </FormItem>
             <Row className="formItem">
               <Form.Submit
@@ -85,21 +83,21 @@ class UserLogin extends Component {
                 onClick={this.handleSubmit}
                 className="submitBtn"
               >
-                登 录
+                重置密码
               </Form.Submit>
             </Row>
-
+            
             <Row className="tips">
               <Col span="12" className="tips-container">
                 <Link to="/user/register" className="tips-text">
-                立即注册
+                  注册
               </Link>
               </Col>
               <Col span="12" className="tips-container">
-                <Link to="/user/resetpassword" className="tips-text" >
-                重置密码
+                <Link to="/user/login" className="tips-text" >
+                  登录
               </Link>
-              </Col>
+              </Col>             
             </Row>
           </Form>
         </div>
@@ -119,4 +117,4 @@ const withConnect = connect(
 );
 
 
-export default withConnect(UserLogin);
+export default withConnect(UserForgetPassword);

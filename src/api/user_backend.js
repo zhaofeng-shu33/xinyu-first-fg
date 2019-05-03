@@ -10,7 +10,8 @@
 import {
   LOGIN_URL, PROFILE_URL,
   LOGOUT_URL, REGISTRATION_URL,
-  PASSWORD_CHANGE_URL
+  PASSWORD_CHANGE_URL,
+  PASSWORD_RESET_REQUEST_URL
 } from './config.js';
 import { getKey, setKey, removeKey } from './key.js';
 
@@ -162,3 +163,24 @@ export async function passwordChange(params) {
   }
   return data;
 } 
+export async function passwordResetRequest(email) {
+
+  let data_send = JSON.stringify({ email });
+  let config = {
+    body: data_send,
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json",
+    }
+  }
+  const response = await fetch(PASSWORD_RESET_REQUEST_URL, config);
+  let data = {status: response.status}
+  try {
+    const json = await response.json();
+    data.data = json;
+  }
+  catch (e) {
+    data.data = { detail: '格式错误' };
+  }
+  return data;
+}

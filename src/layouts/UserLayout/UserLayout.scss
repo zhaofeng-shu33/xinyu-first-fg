@@ -8,6 +8,7 @@
   background: #f0f2f5;
   background-image: 'url(https://img.alicdn.com/tfs/TB1kOoAqv1TBuNjy0FjXXajyXXa-600-600.png)';
   background-size: contain;
+
   .header {
     display: flex;
     flex-direction: column;
@@ -15,26 +16,30 @@
     align-items: center;
     margin-bottom: 40px;
   }
+
   .meta {
     display: flex;
     align-items: center;
     text-decoration: none;
   }
+
   .title {
     text-align: center;
     font-size: 33px;
     color: #3080fe;
     font-weight: 600;
   }
+
   .desc {
     margin: 10px 0;
     font-size: 14px;
     color: rgba(0, 0, 0, 0.45);
   }
-  .logo {
-    height: 32px;
-    margin-right: 10px;
+
+  .logo-image {
+    max-height: 200px;
   }
+
   .formContainer {
     display: flex;
     justify-content: center;
@@ -42,20 +47,24 @@
     max-width: 368px;
     margin: 0 auto;
   }
+
   .formItem {
     position: relative;
     margin-bottom: 25px;
     flex-direction: column;
   }
+
   .formItemCol {
     position: relative;
     margin-bottom: 5px;
   }
+
   input {
     padding: 0 30px !important;
     height: 40px !important;
     line-height: 40px !important;
   }
+
   .inputIcon {
     position: absolute;
     left: 12px;
@@ -63,6 +72,7 @@
     transform: translateY(-50%);
     color: #999;
   }
+
   .submitBtn {
     font-size: 16px;
     height: 40px;
@@ -70,21 +80,30 @@
     background: #3080fe;
     border-radius: 4px;
   }
+
   .checkbox {
     margin-left: 5px;
   }
+
   .account {
     margin: 4px 0;
     text-align: center;
   }
+
   .tips {
     justify-content: center;
   }
+
   .tips-text {
     color: #999;
     text-decoration: none;
     font-size: 13px;
   }
+
+  .tips-container {
+    text-align: center;
+  }
+
   .line {
     color: #dcd6d6;
     margin: 0 8px;
@@ -94,11 +113,13 @@
     width: 368px;
     height: 38px;
     line-height: 38px;
+
     input {
       padding-left: 32px;
       font-size: 13px;
     }
   }
+
   .next-checkbox-label {
     color: #999;
     font-size: 13px;
