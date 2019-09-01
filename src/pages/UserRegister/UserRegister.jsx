@@ -89,7 +89,7 @@ class UserRegister extends Component {
                   <Icon type="person" size="small" className="inputIcon" />
                 }
                 name="name"
-                maxLength={20}
+                maxLength={30}
                 placeholder="用户名"
               />
             </FormItem>
@@ -103,7 +103,7 @@ class UserRegister extends Component {
                   <Icon type="mail" size="small" className="inputIcon" />
                 }
                 name="email"
-                maxLength={20}
+                maxLength={30}
                 placeholder="邮箱"
               />
             </FormItem>
