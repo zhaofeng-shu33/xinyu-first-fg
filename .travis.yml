@@ -6,3 +6,7 @@ install:
   - npm install
 script:
   - npm run build
+<<<<<<< HEAD
+=======
+  - if [[ "$TRAVIS_BRANCH" == "master" ]]; then ./ossutil64 -u -i LTAIhGvOLG5VLaqh -k $APP_SECRET -e http://oss-cn-shenzhen.aliyuncs.com cp -r build/ oss://yiqiaifa/; fi
+>>>>>>> a9c494d5fb849730f2c9ddacd00ddc71c6e5325e
