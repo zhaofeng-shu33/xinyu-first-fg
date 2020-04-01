@@ -1,7 +1,5 @@
 [![Travis](https://travis-ci.com/zhaofeng-shu33/xinyu-first-fg.svg?branch=master)](
     https://travis-ci.com/zhaofeng-shu33/xinyu-first-fg)
-## 测试网址
-[主页](http://yiqiaifa.leidenschaft.cn)
 
 ## 依赖
 采用 阿里的[飞冰](https://ice.work)，基于 ice-design-pro 进行修改。
